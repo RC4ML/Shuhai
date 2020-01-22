@@ -1,0 +1,9 @@
+#open project
+open_project ${CMAKE_BINARY_DIR}/${CMAKE_PROJECT_NAME}-project/${CMAKE_PROJECT_NAME}.xpr
+
+update_compile_order -fileset sources_1
+
+
+#start implementation
+launch_runs impl_1 -jobs 4
+wait_on_run impl_1
