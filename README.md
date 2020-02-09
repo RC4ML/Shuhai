@@ -27,6 +27,7 @@ read driver/README.md and install xdma driver
 3. Build hardware project
 ```
 $ cd hw/
+```
 
 read hw/README.md, build vivado project and program bitstream
 
@@ -35,5 +36,5 @@ read hw/README.md, build vivado project and program bitstream
 5. Build software project
 ```
 $ cd sw/
-
+```
 read sw/README.md, build software project and run
