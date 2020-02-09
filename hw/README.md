@@ -24,6 +24,7 @@ All options:
 | HBM_MAPPING           | <DEFAULT,RBC,BRC,RCB,BRGCG>  | HBM memory mapping, Default: DEFAULT                                               |
 | DDR_MAPPING           | <BRC,RBC,RCB,RCBI>           | DDR memory mapping, Default: RCBI                                                  |
 
+
 3. Create vivado project
 ```
 $ make project
