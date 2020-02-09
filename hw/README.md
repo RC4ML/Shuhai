@@ -18,11 +18,13 @@ $ cmake .. -DMEMORY_NAME=hbm -DHBM_MAPPING=DEFAULT
 $ cmake .. -DMEMORY_NAME=ddr -DDDR_MAPPING=RCBI 
 
 ```
+
 All options:
-| Name                  | Values                       | Desription                                                                         |
-| MEMORY_NAME           | <hbm,ddr>                    | Supported memory device                                                            |
-| HBM_MAPPING           | <DEFAULT,RBC,BRC,RCB,BRGCG>  | HBM memory mapping, Default: DEFAULT                                               |
-| DDR_MAPPING           | <BRC,RBC,RCB,RCBI>           | DDR memory mapping, Default: RCBI                                                  |
+| Name                  | Values                       | Desription                                           |
+|-----------------------|------------------------------|------------------------------------------------------|
+| MEMORY_NAME           | <hbm,ddr>                    | Supported memory device                              |
+| HBM_MAPPING           | <DEFAULT,RBC,BRC,RCB,BRGCG>  | HBM memory mapping, Default: DEFAULT                 |
+| DDR_MAPPING           | <BRC,RBC,RCB,RCBI>           | DDR memory mapping, Default: RCBI                    |
 
 
 3. Create vivado project
