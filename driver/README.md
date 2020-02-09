@@ -4,7 +4,7 @@
 
 1. Install prerequisites, e.g. on Ubuntu install the following packages:
 ```
-$ apt install build-essential linux-headers-generic
+$ sudo apt install build-essential linux-headers-generic
 ```
 
 2. Build kernel module
@@ -17,11 +17,11 @@ $ make
 ## Setup Hugepages
 1. Create a group for users of hugepages, and retrieve its GID (in this example, 1001) then add yourself to the group.
 ```
-$ groupadd hugetlbfs
+$ sudo groupadd hugetlbfs
 
-$ getent group hugetlbfs
+$ sudo getent group hugetlbfs
 
-$ adduser dasidler hugetlbfs
+$ sudo adduser dasidler hugetlbfs
 ```
 
 2. Edit `/etc/sysctl.conf` and add this text to specify the number of pages you want to reserve (see page-size)

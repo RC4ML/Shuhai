@@ -1,51 +1,39 @@
 # benchmarking HBM & DDR
 
+## Getting Started
+
+### Prerequisites
+- Xilinx Vivado 2019.2
+- cmake 3.0 or higher
+
+Supported boards 
+- Xilinx Alveo U280
+
 ## Build project
 
 1. Initialize submodules
 ```
-$ git clone
+$ git clone https://github.com/FPGAML/Benchmarking-HBM-DDR.git
 $ git submodule update --init --recursive
 ```
 
-2. Create build directory
+2. Install xdma driver
 ```
-$ mkdir build
-$ cd build
-```
-
-3. a) Configure HBM project build
-```
-$ cmake .. -DMEMORY_NAME=hbm -DHBM_MAPPING=DEFAULT 
+$ cd driver/
 
 ```
-3. b)Alternatively Configure DDR project build
-```
-$ cmake .. -DMEMORY_NAME=ddr -DDDR_MAPPING=RCBI 
+read driver/README.md and install xdma driver 
 
+3. Build hardware project
 ```
-All options:
-| Name                  | Values                       | Desription                  |
-| MEMORY_NAME           | <hbm,ddr>                    | Supported memory device     |
-| HBM_MAPPING           | <DEFAULT,RBC,BRC,RCB,BRGCG>  | Default: DEFAULT            |
-| DDR_MAPPING           | <BRC,RBC,RCB,RCBI>           | Default: RCBI               |
+$ cd hw/
 
-4. Create vivado project
-```
-$ make project
-```
+read hw/README.md, build vivado project and program bitstream
 
-5. Run synthesis
-```
-$ make synthesize
-```
+4. Reboot
 
-6. Run implementation
+5. Build software project
 ```
-$ make implementation
-```
+$ cd sw/
 
-7. Generate bitstream
-```
-$ make bitstream
-```
+read sw/README.md, build software project and run
