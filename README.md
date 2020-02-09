@@ -5,6 +5,7 @@
 ### Prerequisites
 - Xilinx Vivado 2019.2
 - cmake 3.0 or higher
+- Linux OS
 
 Supported boards 
 - Xilinx Alveo U280
