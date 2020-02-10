@@ -15,23 +15,23 @@ $ make
 ## Run HBMTest Application/Benchmark
 1. Load kernel module if not loaded yet.
 ```
-$ cd ../../driver
+$ cd ../driver
 $ sudo insmod xdma_driver.ko
 ```
 2. Run the Application (requires root permission)
 ```
-$ cd ../sw/build
+$ cd ../build
 $ sudo ./test-hbm
 ```
 
 ## Read DDRTest Application/Benchmark
 1. Load kernel module if not loaded yet.
 ```
-$ cd ../../driver
+$ cd ../driver
 $ sudo insmod xdma_driver.ko
 ```
 2. Run the Application (requires root permission)
 ```
-$ cd ../sw/build
+$ cd ../build
 $ sudo ./test-ddr
 ```

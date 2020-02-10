@@ -9,7 +9,7 @@ $ sudo apt install build-essential linux-headers-generic
 
 2. Build kernel module
 ```
-$ cd dma/driver/driver
+$ cd driver
 $ make
 ```
 

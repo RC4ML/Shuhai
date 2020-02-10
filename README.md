@@ -20,7 +20,7 @@ $ git submodule update --init --recursive
 
 2. Install xdma driver
 ```
-$ cd driver/
+$ cd sw/driver/
 
 ```
 read driver/README.md and install xdma driver 
