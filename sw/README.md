@@ -24,7 +24,7 @@ $ cd ../build
 $ sudo ./test-hbm
 ```
 
-## Read DDRTest Application/Benchmark
+## Run DDRTest Application/Benchmark
 1. Load kernel module if not loaded yet.
 ```
 $ cd ../driver
