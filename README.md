@@ -1,4 +1,4 @@
-# benchmarking HBM & DDR
+# Shuhai
 
 ## Getting Started
 
