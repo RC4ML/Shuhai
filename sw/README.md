@@ -34,7 +34,7 @@ Available flags:
 | memBurstSize      | 32,64,128,256,512,1024           | Memery burst size of all channels                    |
 | configEnable      | 0,1           | 1 means using config.txt to modify some specific value of a channel                    |
 
-## Read DDRTest Application/Benchmark
+## Run DDRTest Application/Benchmark
 1. Load kernel module if not loaded yet.
 ```
 $ cd ../driver

@@ -1,4 +1,4 @@
-# benchmarking HBM & DDR
+# Shuhai
 
 ## Getting Started
 
@@ -38,4 +38,4 @@ read hw/README.md, build vivado project and program bitstream
 ```
 $ cd sw/
 ```
-read sw/README.md, build software project and run
+read sw/README.md, build software project and run application
