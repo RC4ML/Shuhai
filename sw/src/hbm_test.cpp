@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include<string>
 #include <boost/program_options.hpp>
 
 #include "fpga/Fpga.h"
@@ -13,11 +14,15 @@
 
 
 using namespace std;
+
+string path_config = "../src/config.txt";
+
 int main(int argc, char *argv[]) {
 
    boost::program_options::options_description programDescription("Allowed options");
    programDescription.add_options()("workGroupSize,m", boost::program_options::value<unsigned long>(), "Size of the memory region")
                                     ("readEnable,m",boost::program_options::value<unsigned long>(),"enable signal")
+                                    ("writeEnable,m",boost::program_options::value<unsigned long>(),"enable signal")
                                     ("channel,m",boost::program_options::value<unsigned long>(),"channel")
                                     //("numOps,o", boost::program_options::value<unsigned int>(), "Number of memory operate")
                                     ("strideLength,s", boost::program_options::value<unsigned int>(), "Stride length between memory accesses")
@@ -26,6 +31,7 @@ int main(int argc, char *argv[]) {
                                     //("hbmChannel,d", boost::program_options::value<unsigned int>(), "hbm channel, all channel:32,default: 0,")
                                     //("WriteOrRead,w", boost::program_options::value<unsigned int>(), "write:1, read:2,write&read:3")
                                     //("Reset,r", boost::program_options::value<unsigned int>(), "reset:1")
+                                    ("configEnable,b", boost::program_options::value<unsigned int>(), "configEnable")
                                     ;
 
    boost::program_options::variables_map commandLineArgs;
@@ -72,9 +78,12 @@ int main(int argc, char *argv[]) {
    uint32_t read_enable         = 0x0000; //0x80000000 
    uint32_t latency_test_enable = 0;
    uint32_t latency_channel     = 0;
-   //cout<<bitset<sizeof(int)*8>(read_enable)<<endl;
    if(commandLineArgs.count("readEnable") > 0){
-      write_enable = commandLineArgs["readEnable"].as<unsigned long>();
+      read_enable = commandLineArgs["readEnable"].as<unsigned long>();
+      cout<<bitset<sizeof(int)*8>(read_enable)<<endl;
+   }
+   if(commandLineArgs.count("writeEnable") > 0){
+      write_enable = commandLineArgs["writeEnable"].as<unsigned long>();
       cout<<bitset<sizeof(int)*8>(write_enable)<<endl;
    }
    if(commandLineArgs.count("channel") > 0){
@@ -87,9 +96,7 @@ int main(int argc, char *argv[]) {
          }
          cout<<commandLineArgs["workGroupSize"].as<unsigned long>();
    }
-   // if (commandLineArgs.count("numOps") > 0) {
-   //    numOps = commandLineArgs["numOps"].as<unsigned int>();
-   // }
+
    if (commandLineArgs.count("strideLength") > 0) {
       cout<<commandLineArgs["strideLength"].as<unsigned int>()<<endl;
       for(int i=0;i<32;i++){
@@ -101,44 +108,29 @@ int main(int argc, char *argv[]) {
          memBurstSize[i] = commandLineArgs["memBurstSize"].as<unsigned int>();
       }
          cout<<commandLineArgs["memBurstSize"].as<unsigned int>();
-      //memBurstSize = commandLineArgs["memBurstSize"].as<unsigned int>();
    }
-   // std::ofstream file1;
-   // file1.open("../src/test/latency_default_b32_w0x10000000_local.txt",ios::app);
-   // file1<<latency_channel<<":"<<endl;
 
-   // if (commandLineArgs.count("hbmChannel") > 0) {
-   //    hbmChannel = commandLineArgs["hbmChannel"].as<unsigned int>();
-   // }
-   // if (commandLineArgs.count("WriteOrRead") > 0) {
-   //    WriteOrRead = commandLineArgs["WriteOrRead"].as<unsigned int>();
-   // }
-   // initialAddr = hbmChannel*0x4000000;  //hbmaddr[33:2]
-   // if (commandLineArgs.count("initialAddr") > 0) {
-   //     initialAddr = commandLineArgs["initialAddr"].as<unsigned int>();
-   // }
-   // if (commandLineArgs.count("Reset") > 0) {
-   //     Reset = commandLineArgs["Reset"].as<unsigned int>();
-   // }
-   // std::cout << "workGroupSize:" << workGroupSize << std::endl;
-   // std::cout << "numOps:" << numOps << std::endl;
-   // std::cout << "strideLength:" << strideLength << std::endl;
-   // std::cout << "memBurstSize:" << memBurstSize << std::endl;
-   // std::cout << "hbmChannel:" << hbmChannel << std::endl;
-   // std::cout << "initialAddr:" << initialAddr << std::endl;
-    
-   // if(WriteOrRead == 1){
-   //    std::cout << "write" << std::endl;
-   // }
-   // else if(WriteOrRead == 2){
-   //    std::cout << "read" << std::endl;
-   // }
-   // else{
-   //    std::cout << "write & read" << std::endl;
-   // }
-
-   //void* baseAddr = fpga::Fpga::allocate(memorySize);
-
+   if (commandLineArgs.count("configEnable") > 0) {
+      if(commandLineArgs["memBurstSize"].as<unsigned long int>()==1){
+         ifstream f_config(path_config);
+            string s;
+            while(getline(f_config,s)){
+               int index = s.find_first_of(' ');
+               string s_cmd = s.substr(0,index);
+               string s_data = s.substr(index+1);
+               int mchannel = stoi(s_data.substr(0,s_data.find_first_of(" ")) );
+               int mvalue = stoi(s_data.substr(s_data.find_first_of(" ")+1));
+               if(s_cmd=="strideLength"){
+                  strideLength[mchannel] = mvalue;
+               }else if(s_cmd=="workGroupSize"){
+                  workGroupSize[mchannel] = mvalue;
+               }
+               else if(s_cmd=="memBurstSize"){
+                  memBurstSize[mchannel] = mvalue;
+            }
+         }
+      }
+   }
 
 
    uint64_t cycles = 0;
@@ -152,26 +144,7 @@ int main(int argc, char *argv[]) {
 
    controller->readHBMData(write_enable,read_enable,latency_test_enable, latency_channel,numOps[latency_channel],memBurstSize);
 
-   //cycles = controller->testHBM(workGroupSize,  numOps,  strideLength,  memBurstSize,  initialAddr,  hbmChannel, WriteOrRead, Reset);
 
-   
-   
-   
-
-   /*std::cout << "Execution cycles: " << cycles << std::endl;
-   uint64_t transferSize = ((uint64_t) accesses) * ((uint64_t) chunkLength);
-   double transferSizeGB  = ((double) transferSize) / 1024.0 / 1024.0 / 1024.0;
-   double tp  =  transferSizeGB / ((double) (clockPeriod*cycles) / 1000.0 / 1000.0 / 1000.0);
-   std::cout << std::fixed << "Transfer size [GiB]: " << transferSizeGB << std::endl;
-   std::cout << std::fixed << "Throughput[GiB/s]: " << tp << std::endl;
-   std::cout << std::fixed << "#" << memorySize << "\t" << transferSizeGB << "\t" << chunkLength << "\t" << strideLength << "\t" << cycles << "\t" << tp << std::endl;
-
-	fpga::Fpga::getController()->printDebugRegs();
-   fpga::Fpga::getController()->printDmaStatsRegs();
-   fpga::Fpga::getController()->printDdrStatsRegs(0);
-   fpga::Fpga::getController()->printDdrStatsRegs(1);*/
-
-   //fpga::Fpga::free(baseAddr);
    fpga::Fpga::clear();
 
 	return 0;

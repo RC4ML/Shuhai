@@ -3,25 +3,33 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include<string>
 #include <boost/program_options.hpp>
 
 #include <fpga/Fpga.h>
 #include <fpga/FpgaController.h>
 #include <fstream>
 #include <iomanip>
+#include <bitset>
 using namespace std;
 #define CHANNAL_NUM 2
+
+string path_config = "../src/config.txt";
+
 int main(int argc, char *argv[]) {
 
    boost::program_options::options_description programDescription("Allowed options");
    programDescription.add_options()("workGroupSize,m", boost::program_options::value<unsigned long>(), "Size of the memory region")
+                                    ("readEnable,m",boost::program_options::value<unsigned long>(),"enable signal")
+                                    ("writeEnable,m",boost::program_options::value<unsigned long>(),"enable signal")
                                     ("numOps,o", boost::program_options::value<unsigned int>(), "Number of memory operate")
                                     ("strideLength,s", boost::program_options::value<unsigned int>(), "Stride length between memory accesses")
                                     ("memBurstSize,b", boost::program_options::value<unsigned int>(), "Memory burst size")
                                     ("initialAddr,a", boost::program_options::value<unsigned int>(), "initial address for each channel")
                                     ("hbmChannel,d", boost::program_options::value<unsigned int>(), "hbm channel, all channel:32,default: 0,")
                                     ("WriteOrRead,w", boost::program_options::value<unsigned int>(), "write:1, read:2,write&read:3")
-                                    ("Reset,r", boost::program_options::value<unsigned int>(), "reset:1");
+                                    ("Reset,r", boost::program_options::value<unsigned int>(), "reset:1")
+                                    ("configEnable,b", boost::program_options::value<unsigned int>(), "configEnable");
 
    boost::program_options::variables_map commandLineArgs;
    boost::program_options::store(boost::program_options::parse_command_line(argc, argv, programDescription), commandLineArgs);
@@ -68,55 +76,61 @@ int main(int argc, char *argv[]) {
    // if (commandLineArgs.count("numOps") > 0) {
    //    numOps = commandLineArgs["numOps"].as<unsigned int>();
    // }
-   if (commandLineArgs.count("strideLength") > 0) {
-      strideLength[0] = commandLineArgs["strideLength"].as<unsigned int>();
-      cout<<strideLength[0]<<endl;
+   if(commandLineArgs.count("readEnable") > 0){
+      read_enable = commandLineArgs["readEnable"].as<unsigned long>();
+      cout<<bitset<sizeof(int)*8>(read_enable)<<endl;
    }
-   if (commandLineArgs.count("memBurstSize") > 0) {
-      memBurstSize[0] = commandLineArgs["memBurstSize"].as<unsigned int>();
-      cout<<memBurstSize[0]<<endl;
+   if(commandLineArgs.count("writeEnable") > 0){
+      write_enable = commandLineArgs["writeEnable"].as<unsigned long>();
+      cout<<bitset<sizeof(int)*8>(write_enable)<<endl;
+   }
+   if(commandLineArgs.count("channel") > 0){
+      latency_channel = commandLineArgs["channel"].as<unsigned long>();
+      cout<<latency_channel<<endl;
    }
    if (commandLineArgs.count("workGroupSize") > 0) {
-         workGroupSize[0] = commandLineArgs["workGroupSize"].as<unsigned long>();
+         for(int i=0;i<2;i++){
+            workGroupSize[i] = commandLineArgs["workGroupSize"].as<unsigned long>();
+         }
          cout<<commandLineArgs["workGroupSize"].as<unsigned long>();
    }
-   // std::ofstream file1;
-   // file1.open("../src/test/latency_default_b64_w0x10000000_local_ddr.txt",ios::app);
-   // file1<<latency_channel<<":"<<endl;
 
-   // if (commandLineArgs.count("hbmChannel") > 0) {
-   //    hbmChannel = commandLineArgs["hbmChannel"].as<unsigned int>();
-   // }
-   // if (commandLineArgs.count("WriteOrRead") > 0) {
-   //    WriteOrRead = commandLineArgs["WriteOrRead"].as<unsigned int>();
-   // }
-   // initialAddr = hbmChannel*0x4000000;  //hbmaddr[33:2]
-   // if (commandLineArgs.count("initialAddr") > 0) {
-   //     initialAddr = commandLineArgs["initialAddr"].as<unsigned int>();
-   // }
-   // if (commandLineArgs.count("Reset") > 0) {
-   //     Reset = commandLineArgs["Reset"].as<unsigned int>();
-   // }
-   // std::cout << "workGroupSize:" << workGroupSize << std::endl;
-   // std::cout << "numOps:" << numOps << std::endl;
-   // std::cout << "strideLength:" << strideLength << std::endl;
-   // std::cout << "memBurstSize:" << memBurstSize << std::endl;
-   // std::cout << "hbmChannel:" << hbmChannel << std::endl;
-   // std::cout << "initialAddr:" << initialAddr << std::endl;
-    
-   // if(WriteOrRead == 1){
-   //    std::cout << "write" << std::endl;
-   // }
-   // else if(WriteOrRead == 2){
-   //    std::cout << "read" << std::endl;
-   // }
-   // else{
-   //    std::cout << "write & read" << std::endl;
-   // }
+   if (commandLineArgs.count("strideLength") > 0) {
+      cout<<commandLineArgs["strideLength"].as<unsigned int>()<<endl;
+      for(int i=0;i<2;i++){
+         strideLength[i] = commandLineArgs["strideLength"].as<unsigned int>();
+      }
+   }
+   if (commandLineArgs.count("memBurstSize") > 0) {
+      for(int i=0;i<=2;i++){
+         memBurstSize[i] = commandLineArgs["memBurstSize"].as<unsigned int>();
+      }
+         cout<<commandLineArgs["memBurstSize"].as<unsigned int>();
+   }
+   if (commandLineArgs.count("configEnable") > 0) {
+      if(commandLineArgs["memBurstSize"].as<unsigned long int>()==1){
+         ifstream f_config(path_config);
+            string s;
+            while(getline(f_config,s)){
+               int index = s.find_first_of(' ');
+               string s_cmd = s.substr(0,index);
+               string s_data = s.substr(index+1);
+               int mchannel = stoi(s_data.substr(0,s_data.find_first_of(" ")) );
+               int mvalue = stoi(s_data.substr(s_data.find_first_of(" ")+1));
+               if(s_cmd=="strideLength"){
+                  strideLength[mchannel] = mvalue;
+               }else if(s_cmd=="workGroupSize"){
+                  workGroupSize[mchannel] = mvalue;
+               }
+               else if(s_cmd=="memBurstSize"){
+                  memBurstSize[mchannel] = mvalue;
+            }
+         }
+      }
+   }
 
-   //void* baseAddr = fpga::Fpga::allocate(memorySize);
 
-
+      
 
    uint64_t cycles = 0;
 

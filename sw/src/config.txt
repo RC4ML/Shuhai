@@ -1,0 +1,3 @@
+strideLength 0 128
+workGroupSize 1 1024
+memBurstSize 0 128
