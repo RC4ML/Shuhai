@@ -21,7 +21,7 @@ $ sudo insmod xdma_driver.ko
 2. Run the Application (requires root permission)
 ```
 $ cd ../build
-$ sudo ./test-hbm
+$ sudo ./test-hbm --workGroupSize=40
 ```
 Available flags:
 | Name                  | Values                       | Desription                                           |
@@ -43,7 +43,7 @@ $ sudo insmod xdma_driver.ko
 2. Run the Application (requires root permission)
 ```
 $ cd ../build
-$ sudo ./test-ddr --workGroupSize 40
+$ sudo ./test-ddr --workGroupSize=40
 ```
 
 Available flags:
@@ -57,5 +57,9 @@ Available flags:
 | memBurstSize      | 64,128,256,512,1024           | Memery burst size of all channels                    |
 | configEnable      | 0,1           | 1 means using config.txt to modify some specific value of a channel                    |
 
+## config.txt
 config.txt can be used to modify a specifig value of a channel  
-for example: strideLength 0 128 means modify the strideLength of channel 0 to 128
+for example: ```strideLength 0 128``` means modify the strideLength of channel 0 to 128  
+the default content in config.txt is the same with the configuration in our paper   
+just run 
+```sudo ./test-hbm --configEnable=1``` to test it

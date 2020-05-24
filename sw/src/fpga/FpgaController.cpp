@@ -126,29 +126,22 @@ void FpgaController::readHBMData(uint32_t write_enable, uint32_t read_enable, ui
       std::cout << "endRd status: " << std::hex << "0x" << endRd << "。" << std::endl;
    }while((endWr != write_enable) || (endRd != read_enable));
 
-   std::ofstream file1;
-   file1.open("../src/test/crowd_hbm.txt",ios::app);
    for(int i=0;i<=31;i++){
       if((write_enable>>i)&0x01){
          writeReg(hbmChannelAddr, (uint32_t) i);
          latTimerSumWr = readReg(latTimerSumWrAddr);
          speed = memBurstSize[i] * numOps * 450.0 / latTimerSumWr / 1000.0 ;
          std::cout <<  std::dec << "The chennel " << i << ", wr_speed: " << speed << " GB/s" << std::endl;
-         file1<<speed<<endl;  
       }
       if((read_enable>>i)&0x01){
          writeReg(hbmChannelAddr, (uint32_t) i);
          latTimerSumRd = readReg(latTimerSumRdAddr);
          speed = memBurstSize[i] * numOps * 450.0 / latTimerSumRd / 1000.0 ;
          std::cout <<  std::dec << "The chennel " << i << ", rd_speed: " << speed << " GB/s" << std::endl;   
-         file1<<speed<<endl;  
       }
    }
-   file1.close();
 
    if(latency_test_enable){
-      std::ofstream file;
-      file.open("../src/test/crossbar.txt",ios::app);
       int sum=0;
       uint64_t numRegReadNum = numOps < 10000? numOps:10000;
 
@@ -159,16 +152,13 @@ void FpgaController::readHBMData(uint32_t write_enable, uint32_t read_enable, ui
       }
       for(int i =0;i<100;i++){
          //std::cout << "latTimer" << lat_time_arry[i] << "clock" << std::endl;
-         file<<lat_time_arry[i]<<endl;
-         sum+=lat_time_arry[i];
+
          std::cout << "  " << lat_time_arry[i];
          if ( (i>0)&&(i%16==15) )
             std::cout << std::endl; 
       }
       std::cout << std::endl;  
-      //file<<sum<<endl;  
-      file<<endl; 
-      file.close();
+
    }
 
 
@@ -255,30 +245,23 @@ void FpgaController::readDDRData(uint32_t write_enable, uint32_t read_enable, ui
       std::cout << "endRd status: " << std::hex << "0x" << endRd << "。" << std::endl;
    }while((endWr != write_enable) || (endRd != read_enable));
 
-   std::ofstream file1;
-   file1.open("../src/test/crowd_hbm.txt",ios::app);
    for(int i=0;i<=31;i++){
       if((write_enable>>i)&0x01){
          writeReg(hbmChannelAddr, (uint32_t) i);
          latTimerSumWr = readReg(latTimerSumWrAddr);
          speed = memBurstSize[i] * numOps * 300.0 / latTimerSumWr / 1000.0 ;
          std::cout <<  std::dec << "The chennel " << i << ", wr_speed: " << speed << " GB/s" << std::endl;
-         file1<<speed<<endl;  
       }
       if((read_enable>>i)&0x01){
          writeReg(hbmChannelAddr, (uint32_t) i);
          latTimerSumRd = readReg(latTimerSumRdAddr);
          speed = memBurstSize[i] * numOps * 300.0 / latTimerSumRd / 1000.0 ;
          std::cout <<  std::dec << "The chennel " << i << ", rd_speed: " << speed << " GB/s" << std::endl;   
-         file1<<speed<<endl;  
       }
    }
-   file1.close();
 
    if(latency_test_enable){
-      std::ofstream file;
-      file.open("../src/test/crossbar.txt",ios::app);
-      int sum=0;
+
       uint64_t numRegReadNum = numOps < 10000? numOps:10000;
 
       for(uint64_t i =0;i<numRegReadNum;i++){ //numOps
@@ -288,16 +271,13 @@ void FpgaController::readDDRData(uint32_t write_enable, uint32_t read_enable, ui
       }
       for(int i =0;i<100;i++){
          //std::cout << "latTimer" << lat_time_arry[i] << "clock" << std::endl;
-         file<<lat_time_arry[i]<<endl;
-         sum+=lat_time_arry[i];
+
          std::cout << "  " << lat_time_arry[i];
          if ( (i>0)&&(i%16==15) )
             std::cout << std::endl; 
       }
       std::cout << std::endl;  
-      //file<<sum<<endl;  
-      file<<endl; 
-      file.close();
+
    }
 
 

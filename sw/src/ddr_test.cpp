@@ -108,15 +108,20 @@ int main(int argc, char *argv[]) {
          cout<<commandLineArgs["memBurstSize"].as<unsigned int>();
    }
    if (commandLineArgs.count("configEnable") > 0) {
-      if(commandLineArgs["memBurstSize"].as<unsigned long int>()==1){
+      if(commandLineArgs["configEnable"].as<unsigned int>()==1){
          ifstream f_config(path_config);
             string s;
             while(getline(f_config,s)){
+               if(s=="" || (s[0]=='/'&&s[1]=='/')){
+                  continue;
+               }
                int index = s.find_first_of(' ');
                string s_cmd = s.substr(0,index);
                string s_data = s.substr(index+1);
+
                int mchannel = stoi(s_data.substr(0,s_data.find_first_of(" ")) );
                int mvalue = stoi(s_data.substr(s_data.find_first_of(" ")+1));
+               // cout<<s_cmd<<" "<<mchannel<<" "<<mvalue<<endl;
                if(s_cmd=="strideLength"){
                   strideLength[mchannel] = mvalue;
                }else if(s_cmd=="workGroupSize"){
@@ -124,7 +129,14 @@ int main(int argc, char *argv[]) {
                }
                else if(s_cmd=="memBurstSize"){
                   memBurstSize[mchannel] = mvalue;
-            }
+               }else if(s_cmd=="readEnable"){
+                  read_enable = read_enable & (mvalue<<mchannel);
+               }else if(s_cmd=="writeEnable"){
+                  write_enable = write_enable & (mvalue<<mchannel);
+               }else if(s_cmd=="latencyChannel"){
+                  latency_channel = mchannel;
+                  latency_test_enable = mvalue;
+               }
          }
       }
    }
