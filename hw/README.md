@@ -1,5 +1,5 @@
-# Hardware Part of Benchmarking (Build an FPGA Project)
-
+# Hardware Part of Shuhai
+The goal of this part is to build an FPGA project which allows to benchmark HBM or DDR4.  
 
 1. Create build directory
 ```
