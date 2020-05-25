@@ -14,7 +14,6 @@
 using namespace std;
 #define CHANNAL_NUM 2
 
-string path_config = "../src/config.txt";
 
 int main(int argc, char *argv[]) {
 
@@ -29,7 +28,7 @@ int main(int argc, char *argv[]) {
                                     ("hbmChannel,d", boost::program_options::value<unsigned int>(), "hbm channel, all channel:32,default: 0,")
                                     ("WriteOrRead,w", boost::program_options::value<unsigned int>(), "write:1, read:2,write&read:3")
                                     ("Reset,r", boost::program_options::value<unsigned int>(), "reset:1")
-                                    ("configEnable,b", boost::program_options::value<unsigned int>(), "configEnable");
+                                    ("configFile,b", boost::program_options::value<string>(), "configFile");
 
    boost::program_options::variables_map commandLineArgs;
    boost::program_options::store(boost::program_options::parse_command_line(argc, argv, programDescription), commandLineArgs);
@@ -107,9 +106,14 @@ int main(int argc, char *argv[]) {
       }
          cout<<commandLineArgs["memBurstSize"].as<unsigned int>();
    }
-   if (commandLineArgs.count("configEnable") > 0) {
-      if(commandLineArgs["configEnable"].as<unsigned int>()==1){
-         ifstream f_config(path_config);
+   if (commandLineArgs.count("configFile") > 0) {
+      string file = commandLineArgs["configFile"].as<string>();
+      string path_config = "../src/"+file;
+      ifstream f_config(path_config);
+      if(!f_config.is_open()){
+         cout<<"open "+file+" failed, check whether it exists."<<endl;
+      }else{
+         cout<<"open "+file+" succeed."<<endl;
             string s;
             while(getline(f_config,s)){
                if(s=="" || (s[0]=='/'&&s[1]=='/')){
@@ -121,7 +125,7 @@ int main(int argc, char *argv[]) {
 
                int mchannel = stoi(s_data.substr(0,s_data.find_first_of(" ")) );
                int mvalue = stoi(s_data.substr(s_data.find_first_of(" ")+1));
-               // cout<<s_cmd<<" "<<mchannel<<" "<<mvalue<<endl;
+               //cout<<s_cmd<<" "<<mchannel<<" "<<mvalue<<endl;
                if(s_cmd=="strideLength"){
                   strideLength[mchannel] = mvalue;
                }else if(s_cmd=="workGroupSize"){

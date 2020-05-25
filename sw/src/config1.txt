@@ -100,9 +100,4 @@ readEnable 22 1
 readEnable 23 1
 
 
-//configs below is the same configuration of fig5.a in our paper(s=128)
-//memBurstSize 0 32
-//strideLength 0 128
-//workGroupSize 0 268435456
-//readEnable 0 1
-//latencyChannel 0 1
+
