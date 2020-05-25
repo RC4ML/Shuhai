@@ -1,6 +1,5 @@
-# benchmarking HBM & DDR
+# Hardware Part of Benchmarking (Build project)
 
-## Build project
 
 1. Create build directory
 ```
