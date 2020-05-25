@@ -27,7 +27,7 @@ $ mkdir build && cd build
 $ cmake ../src
 $ make
 ```
-#### b. Run HBM testing or DDR4 testing with parameters specified in the "config" file.
+#### b. Run HBM testing or DDR4 testing with parameters specified in the "config" file (shown in 3.c).
 ```
 $ sudo ./test-hbm --configFile=config.txt
 $ sudo ./test-ddr --configFile=config.txt
@@ -41,25 +41,23 @@ If configFile is not specified, the parameters are loaded with default values.
 | latencyChannel | 0-31                   | 0-1                 | closed         | Specify which channel to test latency                                                            |
 | strideLength   | 32,64,128,etc          | 64,128,etc          | 64             | Stride length of all channels                                                                    |
 | memBurstSize   | 32,64,128,256,512,1024 | 64,128,256,512,1024 | 64             | Memery burst size of all channels                                                                |
-| configFile     | fileName               | fileName            | closed         | Use the configurations in the file to modify some specific value                                 |
-```
 
 
-##### Format of configFile
-1. configFile can be used to modify a specifig value of a channel.  
-for example: ```strideLength 0 128``` means modify the strideLength of channel 0 to 128  
+##### c. Format of "config" file
+Each line in the "config" file refers to a parameter reconfiguration, whose format is ```parameter channel value```, where  
+```parameter``` illustrates the exact parameter you want to reconfig,
+```channel``` illustrates the exact AXI channel you want to reconfig the ```parameter```, and
+```value``` illustrates the exact value you want to set the ```parameter```.
+For example, for example: ```strideLength 0 128``` means the strideLength of the AXI channel 0 is set to 128.
 
-2. the default content in config1.txt is the same with the configuration of fig7.a in our paper   
-just run 
+###### Two examples. 
+The configuration file "config1.txt" is associated with Fig 7.a in our paper   
 ```
 sudo ./test-hbm --configFile=config1.txt
 ``` 
 
-
-3. the default content in config1.txt is the same with the configuration of fig5.a in our paper  
-just run 
+The configuration file "config2.txt" is associated with Fig 5.a in our paper   
 ```
 sudo ./test-hbm --configFile=config2.txt
-
-### Available Parameters:
+``` 
 
