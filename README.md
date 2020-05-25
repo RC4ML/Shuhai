@@ -4,6 +4,7 @@ Shuhai is a benchmarking-memory tool that allows FPGA programmers to demystify a
 First, in terms of benchmarking memory, it can be done better on FPGA, rather than on CPU/GPU. 
 In particular, when benchmarking memory on cpu or gpu, we cannot get rid of the negative effect of cache/TLB in CPUs/GPUs. So there is a lot of work about benchmarking cache in CPUs/GPUs, rather than directly benchmarking memory. 
 In contrast, when benchmarking memory on the FPGA, the benchmarking engine can directly attach to the memory such that there is no noise between memory and benchmarking engine.
+
 Second, we do not need to reinvent the wheel again for each memory/FPGA. With Shuhai, before implementing the concrete application that contains a particular memory access pattern on the FPGA, we are able to benchmark the corresponding memory access pattern to make sure that the memory side will not be the bottleneck. In case it is, the authors need to tune the implementation to have a more efficient memory access pattern such that your application will not be bound by memory. 
 
 
