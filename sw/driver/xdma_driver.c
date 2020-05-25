@@ -1423,4 +1423,4 @@ module_init(xdma_driver_init);
 module_exit(xdma_driver_exit);
 
 MODULE_LICENSE("GPL");
-MODULE_AUTHOR("Zeke <wangzeke@zju.edu.cn");
+MODULE_AUTHOR("Zeke Wang, wangzeke@zju.edu.cn");
