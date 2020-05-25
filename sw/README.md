@@ -20,7 +20,7 @@ $ sudo insmod xdma_driver.ko
 Please make sure your kernel module is successfully installed for Ubuntu.
 
 ## 3. Application Part
-a. Compile example application
+a. Compile application code
 ```
 $ cd ..
 $ mkdir build && cd build
@@ -39,8 +39,8 @@ b2. Run DDRTest Application/Benchmark
 $ sudo ./test-ddr
 ```
 
-## Available flags:
-| Name           | HBM Values             | DDR Values          | Default Values | Desription                                                                                       |
+## Available parameters:
+| Name           |  Value Range for HBM          | Value Range for DDR         | Default Values | Desription                                                                                       |
 |----------------|------------------------|---------------------|----------------|--------------------------------------------------------------------------------------------------|
 | workGroupSize  | 0x20-0x10000000        | 0x40-0x10000000     | 0x10000000     | Size of the memory region of channels                                                            |
 | readEnable     | 0-2^32-1               | 0-2^2-1             | 0              | Read enable Signal of channels,each bit represents a channel,the lowest bit represent channel 0  |
