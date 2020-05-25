@@ -1,26 +1,35 @@
 
 # Software Part of Shuhai
 
-
-1. Install prerequisites, e.g. on Ubuntu install the following packages:
+## 1. Prerequisites
+a. Install the following package (cmake) for Ubuntu:
 ```
 $ sudo apt install libboost-program-options-dev cmake
 ```
-2. Compile example application
-```
+b, Make sure you have sudo priority, which is required when installing PCIe kernel and running related application code. 
 
+
+## 2. Kernel Part.
+Loading PCIe kernel module if not loaded yet. 
+```
+$ cd driver
+$ make clean
+$ make
+$ sudo insmod xdma_driver.ko
+```
+Please make sure your kernel module is successfully installed for Ubuntu.
+
+## 3. Application Part.
+a. Compile example application
+```
+$ cd ..
 $ mkdir build && cd build
 $ cmake ../src
 $ make
 ```
 
-## Run HBMTest Application/Benchmark
-1. Load kernel module if not loaded yet.
-```
-$ cd ../driver
-$ sudo insmod xdma_driver.ko
-```
-2. Run the Application (requires root permission)
+b1. Run HBMTest Application/Benchmark
+ Run the Application (requires root permission)
 ```
 $ cd ../build
 $ sudo ./test-hbm --workGroupSize=40
@@ -36,13 +45,7 @@ Available flags:
 | memBurstSize      | 32,64,128,256,512,1024           | Memery burst size of all channels                    |
 | configEnable      | 0,1           | 1 means using config.txt to modify some specific value of a channel                    |
 
-## Run DDRTest Application/Benchmark
-1. Load kernel module if not loaded yet.
-```
-$ cd ../driver
-$ sudo insmod xdma_driver.ko
-```
-2. Run the Application (requires root permission)
+b2. Run DDRTest Application/Benchmark
 ```
 $ cd ../build
 $ sudo ./test-ddr --workGroupSize=40
