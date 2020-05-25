@@ -35,12 +35,12 @@ $ sudo ./test-ddr --configFile=config.txt
 If configFile is not specified, the parameters are loaded with default values.
 | Name           |  Value Range for HBM          | Value Range for DDR         | Default Values | Desription                                                                                       |
 |----------------|------------------------|---------------------|----------------|--------------------------------------------------------------------------------------------------|
-| workGroupSize  | 0x20-0x10000000        | 0x40-0x10000000     | 0x10000000     | Size of the memory region of channels                                                            |
-| readEnable     | 0-2^32-1               | 0-2^2-1             | 0              | Read enable Signal of channels,each bit represents a channel,the lowest bit represent channel 0  |
-| writeEnable    | 0-2^32-1               | 0-2^2-1             | 0              | Write enable Signal of channels,each bit represents a channel,the lowest bit represent channel 0 |
+| workGroupSize  | 0x20-0x10000000        | 0x40-0x10000000     | 0x10000000     | Working set size                                                            |
+| readEnable     | 0-2^32-1               | 0-2^2-1             | 0              | Read enable Signal, each bit represents a channel, the lowest bit represents the channel 0  |
+| writeEnable    | 0-2^32-1               | 0-2^2-1             | 0              | Write enable Signal, each bit represents a channel,the lowest bit represents the channel 0 |
 | latencyChannel | 0-31                   | 0-1                 | closed         | Specify which channel to test latency                                                            |
-| strideLength   | 32,64,128,etc          | 64,128,etc          | 64             | Stride length of all channels                                                                    |
-| memBurstSize   | 32,64,128,256,512,1024 | 64,128,256,512,1024 | 64             | Memery burst size of all channels                                                                |
+| strideLength   | 32,64,128,etc          | 64,128,etc          | 64             | Stride length                                                                    |
+| memBurstSize   | 32,64,128,256,512,1024 | 64,128,256,512,1024 | 64             | Memery burst size                                                                |
 
 
 #### c. Format of "config" file
