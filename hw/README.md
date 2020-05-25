@@ -1,4 +1,4 @@
-# Hardware Part of Benchmarking (Build project)
+# Hardware Part of Benchmarking (Build an FPGA Project)
 
 
 1. Create build directory
