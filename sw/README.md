@@ -20,25 +20,25 @@ $ sudo insmod xdma_driver.ko
 Please make sure your kernel module is successfully installed for Ubuntu.
 
 ## 3. Application Part
-### a. Compile application code
+#### a. Compile application code
 ```
 $ cd ..
 $ mkdir build && cd build
 $ cmake ../src
 $ make
 ```
-### b. Run HBM testing (b1) or DDR4 testing (b2) with parameters configured with the "configFile" (b3).
+#### b. Run HBM testing (b1) or DDR4 testing (b2) with parameters configured with the "configFile" (b3).
 
-#### b1. Run HBMTest Application/Benchmark
+##### b1. Run HBMTest Application/Benchmark
 ```
 $ sudo ./test-hbm --configFile=config1.txt
 ```
 
-#### b2. Run DDRTest Application/Benchmark
+##### b2. Run DDRTest Application/Benchmark
 ```
 $ sudo ./test-ddr --configFile=config1.txt
 ```
-#### configFile
+##### configFile
 1. configFile can be used to modify a specifig value of a channel.  
 for example: ```strideLength 0 128``` means modify the strideLength of channel 0 to 128  
 
