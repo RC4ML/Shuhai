@@ -27,18 +27,25 @@ $ mkdir build && cd build
 $ cmake ../src
 $ make
 ```
-#### b. Run HBM testing (b1) or DDR4 testing (b2) with parameters configured with the "configFile" (b3).
+#### b. Run HBM testing or DDR4 testing with parameters specified in the "config" file.
+```
+$ sudo ./test-hbm --configFile=config.txt
+$ sudo ./test-ddr --configFile=config.txt
+```
+If configFile is not specified, the parameters are loaded with default values.
+| Name           |  Value Range for HBM          | Value Range for DDR         | Default Values | Desription                                                                                       |
+|----------------|------------------------|---------------------|----------------|--------------------------------------------------------------------------------------------------|
+| workGroupSize  | 0x20-0x10000000        | 0x40-0x10000000     | 0x10000000     | Size of the memory region of channels                                                            |
+| readEnable     | 0-2^32-1               | 0-2^2-1             | 0              | Read enable Signal of channels,each bit represents a channel,the lowest bit represent channel 0  |
+| writeEnable    | 0-2^32-1               | 0-2^2-1             | 0              | Write enable Signal of channels,each bit represents a channel,the lowest bit represent channel 0 |
+| latencyChannel | 0-31                   | 0-1                 | closed         | Specify which channel to test latency                                                            |
+| strideLength   | 32,64,128,etc          | 64,128,etc          | 64             | Stride length of all channels                                                                    |
+| memBurstSize   | 32,64,128,256,512,1024 | 64,128,256,512,1024 | 64             | Memery burst size of all channels                                                                |
+| configFile     | fileName               | fileName            | closed         | Use the configurations in the file to modify some specific value                                 |
+```
 
-##### b1. Run HBMTest Application/Benchmark
-```
-$ sudo ./test-hbm --configFile=config1.txt
-```
 
-##### b2. Run DDRTest Application/Benchmark
-```
-$ sudo ./test-ddr --configFile=config1.txt
-```
-##### configFile
+##### Format of configFile
 1. configFile can be used to modify a specifig value of a channel.  
 for example: ```strideLength 0 128``` means modify the strideLength of channel 0 to 128  
 
@@ -55,16 +62,4 @@ just run
 sudo ./test-hbm --configFile=config2.txt
 
 ### Available Parameters:
-| Name           |  Value Range for HBM          | Value Range for DDR         | Default Values | Desription                                                                                       |
-|----------------|------------------------|---------------------|----------------|--------------------------------------------------------------------------------------------------|
-| workGroupSize  | 0x20-0x10000000        | 0x40-0x10000000     | 0x10000000     | Size of the memory region of channels                                                            |
-| readEnable     | 0-2^32-1               | 0-2^2-1             | 0              | Read enable Signal of channels,each bit represents a channel,the lowest bit represent channel 0  |
-| writeEnable    | 0-2^32-1               | 0-2^2-1             | 0              | Write enable Signal of channels,each bit represents a channel,the lowest bit represent channel 0 |
-| latencyChannel | 0-31                   | 0-1                 | closed         | Specify which channel to test latency                                                            |
-| strideLength   | 32,64,128,etc          | 64,128,etc          | 64             | Stride length of all channels                                                                    |
-| memBurstSize   | 32,64,128,256,512,1024 | 64,128,256,512,1024 | 64             | Memery burst size of all channels                                                                |
-| configFile     | fileName               | fileName            | closed         | Use the configurations in the file to modify some specific value                                 |
 
-
-
-```
