@@ -47,6 +47,7 @@ b2. Run DDRTest Application/Benchmark
 $ sudo ./test-ddr --workGroupSize=40
 ```
 
+
 Available flags:
 | Name                  | Values                       | Desription                                           |
 |-----------------------|------------------------------|------------------------------------------------------|
