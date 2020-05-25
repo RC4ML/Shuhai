@@ -43,14 +43,18 @@ If configFile is not specified, the parameters are loaded with default values.
 | memBurstSize   | 32,64,128,256,512,1024 | 64,128,256,512,1024 | 64             | Memery burst size of all channels                                                                |
 
 
-##### c. Format of "config" file
+#### c. Format of "config" file
 Each line in the "config" file refers to a parameter reconfiguration, whose format is ```parameter channel value```, where  
+
 ```parameter``` illustrates the exact parameter you want to reconfig,
+
 ```channel``` illustrates the exact AXI channel you want to reconfig the ```parameter```, and
+
 ```value``` illustrates the exact value you want to set the ```parameter```.
+
 For example, for example: ```strideLength 0 128``` means the strideLength of the AXI channel 0 is set to 128.
 
-###### Two examples. 
+##### Two examples used  in our paper. 
 The configuration file "config1.txt" is associated with Fig 7.a in our paper   
 ```
 sudo ./test-hbm --configFile=config1.txt
