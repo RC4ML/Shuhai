@@ -20,50 +20,48 @@ $ sudo insmod xdma_driver.ko
 Please make sure your kernel module is successfully installed for Ubuntu.
 
 ## 3. Application Part
-a. Compile example application
+#### a. Compile application code
 ```
 $ cd ..
 $ mkdir build && cd build
 $ cmake ../src
 $ make
 ```
-b. Run HBM testing (b1) or DDR4 testing (b2)
-
-b1. Run HBMTest Application/Benchmark
+#### b. Run HBM testing or DDR4 testing with parameters specified in the "config" file (shown in 3.c).
 ```
-$ sudo ./test-hbm
+$ sudo ./test-hbm --configFile=config.txt
+$ sudo ./test-ddr --configFile=config.txt
 ```
-
-b2. Run DDRTest Application/Benchmark
-```
-$ sudo ./test-ddr
-```
-
-## Available flags:
-| Name           | HBM Values             | DDR Values          | Default Values | Desription                                                                                       |
+If configFile is not specified, the parameters are loaded with default values.
+| Name           |  Value Range for HBM          | Value Range for DDR         | Default Values | Desription                                                                                       |
 |----------------|------------------------|---------------------|----------------|--------------------------------------------------------------------------------------------------|
-| workGroupSize  | 0x20-0x10000000        | 0x40-0x10000000     | 0x10000000     | Size of the memory region of channels                                                            |
-| readEnable     | 0-2^32-1               | 0-2^2-1             | 0              | Read enable Signal of channels,each bit represents a channel,the lowest bit represent channel 0  |
-| writeEnable    | 0-2^32-1               | 0-2^2-1             | 0              | Write enable Signal of channels,each bit represents a channel,the lowest bit represent channel 0 |
+| workGroupSize  | 0x20-0x10000000        | 0x40-0x10000000     | 0x10000000     | Working set size                                                            |
+| readEnable     | 0-2^32-1               | 0-2^2-1             | 0              | Read enable Signal, each bit represents a channel, the lowest bit represents the channel 0  |
+| writeEnable    | 0-2^32-1               | 0-2^2-1             | 0              | Write enable Signal, each bit represents a channel,the lowest bit represents the channel 0 |
 | latencyChannel | 0-31                   | 0-1                 | closed         | Specify which channel to test latency                                                            |
-| strideLength   | 32,64,128,etc          | 64,128,etc          | 64             | Stride length of all channels                                                                    |
-| memBurstSize   | 32,64,128,256,512,1024 | 64,128,256,512,1024 | 64             | Memery burst size of all channels                                                                |
-| configFile     | fileName               | fileName            | closed         | Use the configurations in the file to modify some specific value                                 |
+| strideLength   | 32,64,128,etc          | 64,128,etc          | 64             | Stride length                                                                    |
+| memBurstSize   | 32,64,128,256,512,1024 | 64,128,256,512,1024 | 64             | Memery burst size                                                                |
 
 
-## configFile
-1. configFile can be used to modify a specifig value of a channel.  
-for example: ```strideLength 0 128``` means modify the strideLength of channel 0 to 128  
+#### c. Format of "config" file
+Each line in the "config" file refers to a parameter reconfiguration, whose format is ```parameter channel value```, where  
 
-2. the default content in config1.txt is the same with the configuration of fig7.a in our paper   
-just run 
+```parameter``` illustrates the exact parameter you want to reconfig,
+
+```channel``` illustrates the exact AXI channel you want to reconfig the ```parameter```, and
+
+```value``` illustrates the exact value you want to set the ```parameter```.
+
+For example, for example: ```strideLength 0 128``` means the strideLength of the AXI channel 0 is set to 128.
+
+##### Two examples used  in our paper. 
+The configuration file "config1.txt" is associated with Fig 7.a in our paper   
 ```
 sudo ./test-hbm --configFile=config1.txt
 ``` 
 
-
-3. the default content in config1.txt is the same with the configuration of fig5.a in our paper  
-just run 
+The configuration file "config2.txt" is associated with Fig 5.a in our paper   
 ```
 sudo ./test-hbm --configFile=config2.txt
-```
+``` 
+
