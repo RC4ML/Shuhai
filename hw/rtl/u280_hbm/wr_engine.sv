@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 - 2020, Zeke Wang, Systems Group, ETH Zurich
+ * Copyright 2019 - 2020, RC4ML, Zhejiang University
  *
  * This hardware operator is free software: you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as published
@@ -97,7 +97,7 @@ module wr_engine #(parameter ENGINE_ID = 0,
     begin
         m_axi_AWID  <= {ID_WIDTH{1'b0}};
         m_axi_AWLEN <= (mem_burst_size>>($clog2(DATA_WIDTH/8)))-8'b1;
-        m_axi_AWSIZE      < = (DATA_WIDTH == 256)? 3'b101:3'b110; //just for 256-bit or 512-bit.
+        m_axi_AWSIZE      <= (DATA_WIDTH == 256)? 3'b101:3'b110; //just for 256-bit or 512-bit.
         m_axi_AWBURST  <= 2'b01;   // INC, not FIXED (00)
         m_axi_AWLOCK   <= 2'b00;   // Normal memory operation
         m_axi_AWCACHE  <= 4'b0000; //4'b0011; // Normal, non-cacheable, modifiable, bufferable (Xilinx recommends)
@@ -116,7 +116,7 @@ module wr_engine #(parameter ENGINE_ID = 0,
     assign m_axi_AWVALID = guard_AWVALID; //(mem_op_index < num_mem_ops_r) &
     
     assign m_axi_WLAST  = (burst_inc == m_axi_AWLEN)&guard_WVALID; //wlast is 1 for the last beat.
-    assign m_axi_WVALID = (wr_ops ! = num_mem_ops_r)&guard_WVALID; //<
+    assign m_axi_WVALID = (wr_ops != num_mem_ops_r)&guard_WVALID; //<
     
     
     always @(posedge clk)

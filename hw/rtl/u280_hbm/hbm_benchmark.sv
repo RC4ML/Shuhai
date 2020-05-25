@@ -1,15 +1,19 @@
-////////////////////////////////////////////////////////////////////////////////
-// Instantiating MMCM for AXI clock generation
-
-//----------------------------------------------------------------------------
-//  Output     Output      Phase    Duty Cycle   Pk-to-Pk     Phase
-//   Clock     Freq (MHz)  (degrees)    (%)     Jitter (ps)  Error (ps)
-//----------------------------------------------------------------------------
-// clk_out1__100.00000______0.000______50.0______130.958_____98.575
-// clk_out2__200.00000______0.000______50.0______114.829_____98.575
-// clk_out3__250.00000______0.000______50.0______110.209_____98.575
-// clk_out4__333.33333______0.000______50.0______104.542_____98.575
-// clk_out5__333.33333______0.000______50.0______104.542_____98.575
+/*
+ * Copyright 2019 - 2020, RC4ML, Zhejiang University
+ *
+ * This hardware operator is free software: you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as published
+ * by the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 `include "hbm_bench.vh"
 

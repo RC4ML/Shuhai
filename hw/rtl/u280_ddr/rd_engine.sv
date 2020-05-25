@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 - 2020, Zeke Wang, Systems Group, ETH Zurich
+ * Copyright 2019 - 2020, RC4ML, Zhejiang University
  *
  * This hardware operator is free software: you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as published
