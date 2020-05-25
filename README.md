@@ -18,10 +18,10 @@ $ git submodule update --init --recursive
 ```
 $ cd hw/
 ```
-read hw/README.md, build vivado project and program bitstream
+According to hw/README.md, build vivado project and program the FPGA with the generated bitstream. 
 
 ## 3. Build Software Project
 ```
 $ cd sw/
 ```
-read sw/README.md, build software project and run application
+According to sw/README.md, build the software project and run the application
