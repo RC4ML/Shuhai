@@ -2,11 +2,11 @@
 # Software Part of Shuhai
 
 ## 1. Prerequisites
-a. Install the following package (cmake) for Ubuntu:
+#### a. Install the following package (cmake) for Ubuntu:
 ```
 $ sudo apt install libboost-program-options-dev cmake
 ```
-b. Make sure you have sudo priority, which is required when installing PCIe kernel and running related application code. 
+#### b. Make sure you have sudo priority, which is required when installing PCIe kernel and running related application code. 
 
 
 ## 2. Setup Hugepages
