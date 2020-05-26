@@ -1390,10 +1390,10 @@ remove(struct pci_dev *pdev) {
 }
 
 static struct pci_driver pci_driver = {
-    .name = DRV_NAME,
+    .name     = DRV_NAME,
     .id_table = pci_ids,
-    .probe = probe,
-    .remove = remove,
+    .probe    = probe,
+    .remove   = remove,
 };
 
 static int __init
@@ -1423,4 +1423,4 @@ module_init(xdma_driver_init);
 module_exit(xdma_driver_exit);
 
 MODULE_LICENSE("GPL");
-MODULE_AUTHOR("David Sidler <david.sidler@inf.ethz.ch");
+MODULE_AUTHOR("Zeke Wang, wangzeke@zju.edu.cn");
