@@ -9,12 +9,12 @@ Supported boards
 - Xilinx Alveo U280
 
 ## Steps for Building an FPGA Bitstream for the Further HBM/DDR4 Testing
-1. Create build directory
+#### 1. Create build directory
 ```
 $ mkdir build
 $ cd build
 ```
-
+#### 2. Configure Vivado Project
 2. a) Configure HBM project build
 ```
 $ cmake .. -DMEMORY_NAME=hbm -DHBM_MAPPING=DEFAULT 
@@ -25,7 +25,6 @@ $ cmake .. -DMEMORY_NAME=hbm -DHBM_MAPPING=DEFAULT
 $ cmake .. -DMEMORY_NAME=ddr -DDDR_MAPPING=RCBI 
 
 ```
-
 All options:
 | Name                  | Values                       | Desription                                           |
 |-----------------------|------------------------------|------------------------------------------------------|
@@ -34,22 +33,22 @@ All options:
 | DDR_MAPPING           | <BRC,RBC,RCB,RCBI>           | DDR memory mapping, Default: RCBI                    |
 
 
-3. Create vivado project
+#### 3. Create vivado project
 ```
 $ make project
 ```
 
-4. Run synthesis
+#### 4. Run synthesis
 ```
 $ make synthesize
 ```
 
-5. Run implementation
+#### 5. Run implementation
 ```
 $ make implementation
 ```
 
-6. Generate bitstream
+#### 6. Generate bitstream
 ```
 $ make bitstream
 ```
