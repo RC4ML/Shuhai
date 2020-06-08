@@ -86,44 +86,49 @@ module hbm_benchmark#(
     output wire[8:0]                     c1_ddr3_dm,
     output wire[1:0]                     dram_on
 
-// /////////ddr0////////
-//     input                       ddr0_sys_100M_p,
-//     input                       ddr0_sys_100M_n,
-    
-//     input                       ddr1_sys_100M_p,
-//     input                       ddr1_sys_100M_n,
-
-//     output                      c0_ddr4_act_n,
-//     output [16:0]               c0_ddr4_adr,
-//     output [1:0]                c0_ddr4_ba,
-//     output [1:0]                c0_ddr4_bg,
-//     output [0:0]                c0_ddr4_cke,
-//     output [0:0]                c0_ddr4_odt,
-//     output [0:0]                c0_ddr4_cs_n,
-//     output [0:0]                c0_ddr4_ck_t,
-//     output [0:0]                c0_ddr4_ck_c,
-//     output                      c0_ddr4_reset_n,
-//     output                      c0_ddr4_parity,
-//     inout  [71:0]               c0_ddr4_dq,
-//     inout  [17:0]               c0_ddr4_dqs_t,
-//     inout  [17:0]               c0_ddr4_dqs_c,
-    
-// /////////ddr1
-//     output                      c1_ddr4_act_n,
-//     output [16:0]               c1_ddr4_adr,
-//     output [1:0]                c1_ddr4_ba,
-//     output [1:0]                c1_ddr4_bg,
-//     output [0:0]                c1_ddr4_cke,
-//     output [0:0]                c1_ddr4_odt,
-//     output [0:0]                c1_ddr4_cs_n,
-//     output [0:0]                c1_ddr4_ck_t,
-//     output [0:0]                c1_ddr4_ck_c,
-//     output                      c1_ddr4_reset_n,
-//     output                      c1_ddr4_parity,
-//     inout  [71:0]               c1_ddr4_dq,
-//     inout  [17:0]               c1_ddr4_dqs_t,
-//     inout  [17:0]               c1_ddr4_dqs_c    
 );
+
+// uwire c0_sys_clk;
+
+// IBUFDS_GTE2 #(
+//             .CLKCM_CFG("TRUE"),   // Refer to Transceiver User Guide
+//             .CLKRCV_TRST("TRUE"), // Refer to Transceiver User Guide
+//             .CLKSWING_CFG(2'b11)  // Refer to Transceiver User Guide
+//          )
+//          IBUFDS_GTE2_inst (
+//             .O(c0_sys_clk),         // 1-bit output: Refer to Transceiver User Guide
+//             .ODIV2(),            // 1-bit output: Refer to Transceiver User Guide
+//             .CEB(1'b0),          // 1-bit input: Refer to Transceiver User Guide
+//             .I(c0_sys_clk_p),        // 1-bit input: Refer to Transceiver User Guide
+//             .IB(c0_sys_clk_n)        // 1-bit input: Refer to Transceiver User Guide
+//         );
+
+
+// reg ff;
+
+// always @ (posedge c0_sys_clk) begin
+//     ff <= ~ff;
+// end
+
+
+// ila_bench inst_debug_bench (
+//    .clk (c0_sys_clk),
+
+//    .probe0  (ff), //1
+//    .probe1  (), //1
+//    .probe2  (), //1
+//    .probe3  (), //1
+//    .probe4  (), //1
+//    .probe5  (), //1
+//    .probe6  (), //1
+//    .probe7  ()  //1
+// );
+
+// assign dram_on = 2'b11;
+// assign c0_ddr3_dm = 9'h0;
+// assign c1_ddr3_dm = 9'h0;
+
+
 
 ////////////////////////////////////////////////////////////////////////////////
 // Localparams
@@ -160,15 +165,20 @@ module hbm_benchmark#(
   wire                  ddr1_sys_100M;
 
 
+    wire                      user_clk;
+    wire                        user_resetn;
 
 
+assign dram_on = 2'b11;
+assign c0_ddr3_dm = 9'h0;
+assign c1_ddr3_dm = 9'h0;
 
 
 AXI #(
-    .ADDR_WIDTH    (34 ), 
+    .ADDR_WIDTH    (33 ), 
     .DATA_WIDTH    (512),
     .PARAMS_BITS   (256),
-    .ID_WIDTH      (5  ),
+    .ID_WIDTH      (4  ),
     .USER_WIDTH    (5  )
     ) hbm_axi[AXI_CHANNELS]();
 
@@ -430,8 +440,7 @@ endgenerate
    //  AXI Interface                                                                                                 //
    //----------------------------------------------------------------------------------------------------------------//
    
-   wire 					   user_clk;
-   wire 					   user_resetn;
+  
    
   // Wires for Avery HOT/WARM and COLD RESET
    wire 					   avy_sys_rst_n_c;
@@ -597,7 +606,7 @@ endgenerate
          IBUFDS_GTE2_inst (
             .O(sys_clk),         // 1-bit output: Refer to Transceiver User Guide
             .ODIV2(),            // 1-bit output: Refer to Transceiver User Guide
-            .CEB(GND_1),          // 1-bit input: Refer to Transceiver User Guide
+            .CEB(1'b0),          // 1-bit input: Refer to Transceiver User Guide
             .I(sys_clk_p),        // 1-bit input: Refer to Transceiver User Guide
             .IB(sys_clk_n)        // 1-bit input: Refer to Transceiver User Guide
         );
@@ -885,31 +894,48 @@ always @ (posedge c1_ddr3_clk) begin
   c1_ddr3_aresetn <= ~c1_ddr3_rst & c1_mmcm_locked;
 end
 
+// assign c1_ddr3_aresetn = ~c1_ddr3_rst & c1_mmcm_locked;
+// assign c0_ddr3_aresetn = ~c0_ddr3_rst & c0_mmcm_locked;
+
 
 assign hbm_axi[0].clk   = c0_ddr3_clk;
 assign hbm_axi[1].clk   = c1_ddr3_clk;
 assign hbm_axi[0].arstn = c0_ddr3_aresetn & (~hbm_reset);
 assign hbm_axi[1].arstn = c1_ddr3_aresetn & (~hbm_reset);
 
+uwire c0_init_calib_complete, c1_init_calib_complete;
+
+ila_bench inst_debug_bench (
+   .clk (sys_clk),
+
+   .probe0  (c0_ddr3_rst), //1
+   .probe1  (c0_mmcm_locked), //1
+   .probe2  (c1_ddr3_rst), //1
+   .probe3  (c1_mmcm_locked), //1
+   .probe4  (c0_init_calib_complete), //1
+   .probe5  (c1_init_calib_complete), //1
+   .probe6  (c0_ddr3_aresetn), //1
+   .probe7  (start_wr[0])  //1
+);
 
 mig_7series_0 u_mig_7series_0 (
   // Memory interface ports
-  .c0_ddr3_addr                         (c0_ddr3_addr),            // output [15:0]        c0_ddr3_addr
+  .c0_ddr3_addr                         (c0_ddr3_addr),            // output [13:0]        c0_ddr3_addr
   .c0_ddr3_ba                           (c0_ddr3_ba),              // output [2:0]        c0_ddr3_ba
   .c0_ddr3_cas_n                        (c0_ddr3_cas_n),           // output            c0_ddr3_cas_n
-  .c0_ddr3_ck_n                         (c0_ddr3_ck_n),            // output [1:0]        c0_ddr3_ck_n
-  .c0_ddr3_ck_p                         (c0_ddr3_ck_p),            // output [1:0]        c0_ddr3_ck_p
-  .c0_ddr3_cke                          (c0_ddr3_cke),             // output [1:0]        c0_ddr3_cke
+  .c0_ddr3_ck_n                         (c0_ddr3_ck_n),            // output [0:0]        c0_ddr3_ck_n
+  .c0_ddr3_ck_p                         (c0_ddr3_ck_p),            // output [0:0]        c0_ddr3_ck_p
+  .c0_ddr3_cke                          (c0_ddr3_cke),             // output [0:0]        c0_ddr3_cke
   .c0_ddr3_ras_n                        (c0_ddr3_ras_n),           // output            c0_ddr3_ras_n
   .c0_ddr3_reset_n                      (c0_ddr3_reset_n),         // output            c0_ddr3_reset_n
   .c0_ddr3_we_n                         (c0_ddr3_we_n),            // output            c0_ddr3_we_n
-  .c0_ddr3_dq                           (c0_ddr3_dq),              // inout [71:0]        c0_ddr3_dq
-  .c0_ddr3_dqs_n                        (c0_ddr3_dqs_n),           // inout [8:0]        c0_ddr3_dqs_n
-  .c0_ddr3_dqs_p                        (c0_ddr3_dqs_p),           // inout [8:0]        c0_ddr3_dqs_p
-  .c0_init_calib_complete               (),  // output            init_calib_complete
+  .c0_ddr3_dq                           (c0_ddr3_dq),              // inout [63:0]        c0_ddr3_dq
+  .c0_ddr3_dqs_n                        (c0_ddr3_dqs_n),           // inout [7:0]        c0_ddr3_dqs_n
+  .c0_ddr3_dqs_p                        (c0_ddr3_dqs_p),           // inout [7:0]        c0_ddr3_dqs_p
+  .c0_init_calib_complete               (c0_init_calib_complete),  // output            init_calib_complete
     
-  .c0_ddr3_cs_n                         (c0_ddr3_cs_n),            // output [1:0]        c0_ddr3_cs_n
-  .c0_ddr3_odt                          (c0_ddr3_odt),             // output [1:0]        c0_ddr3_odt
+  .c0_ddr3_cs_n                         (c0_ddr3_cs_n),            // output [0:0]        c0_ddr3_cs_n
+  .c0_ddr3_odt                          (c0_ddr3_odt),             // output [0:0]        c0_ddr3_odt
   // Application interface ports        
   .c0_ui_clk                            (c0_ddr3_clk),               // output            c0_ddr3_clk
   .c0_ui_clk_sync_rst                   (c0_ddr3_rst),              // output            c0_ddr3_rst
@@ -995,22 +1021,22 @@ mig_7series_0 u_mig_7series_0 (
   .clk_ref_p                            (clk_ref_p),                  // input                clk_ref_p
   .clk_ref_n                            (clk_ref_n),                  // input                clk_ref_n
   // Memory interface ports
-  .c1_ddr3_addr                         (c1_ddr3_addr),            // output [15:0]        c1_ddr3_addr
+  .c1_ddr3_addr                         (c1_ddr3_addr),            // output [13:0]        c1_ddr3_addr
   .c1_ddr3_ba                           (c1_ddr3_ba),              // output [2:0]        c1_ddr3_ba
   .c1_ddr3_cas_n                        (c1_ddr3_cas_n),           // output            c1_ddr3_cas_n
-  .c1_ddr3_ck_n                         (c1_ddr3_ck_n),            // output [1:0]        c1_ddr3_ck_n
-  .c1_ddr3_ck_p                         (c1_ddr3_ck_p),            // output [1:0]        c1_ddr3_ck_p
-  .c1_ddr3_cke                          (c1_ddr3_cke),             // output [1:0]        c1_ddr3_cke
+  .c1_ddr3_ck_n                         (c1_ddr3_ck_n),            // output [0:0]        c1_ddr3_ck_n
+  .c1_ddr3_ck_p                         (c1_ddr3_ck_p),            // output [0:0]        c1_ddr3_ck_p
+  .c1_ddr3_cke                          (c1_ddr3_cke),             // output [0:0]        c1_ddr3_cke
   .c1_ddr3_ras_n                        (c1_ddr3_ras_n),           // output            c1_ddr3_ras_n
   .c1_ddr3_reset_n                      (c1_ddr3_reset_n),         // output            c1_ddr3_reset_n
   .c1_ddr3_we_n                         (c1_ddr3_we_n),            // output            c1_ddr3_we_n
-  .c1_ddr3_dq                           (c1_ddr3_dq),              // inout [71:0]        c1_ddr3_dq
-  .c1_ddr3_dqs_n                        (c1_ddr3_dqs_n),           // inout [8:0]        c1_ddr3_dqs_n
-  .c1_ddr3_dqs_p                        (c1_ddr3_dqs_p),           // inout [8:0]        c1_ddr3_dqs_p
-  .c1_init_calib_complete               (),  // output            init_calib_complete
+  .c1_ddr3_dq                           (c1_ddr3_dq),              // inout [63:0]        c1_ddr3_dq
+  .c1_ddr3_dqs_n                        (c1_ddr3_dqs_n),           // inout [7:0]        c1_ddr3_dqs_n
+  .c1_ddr3_dqs_p                        (c1_ddr3_dqs_p),           // inout [7:0]        c1_ddr3_dqs_p
+  .c1_init_calib_complete               (c1_init_calib_complete),  // output            init_calib_complete
     
-  .c1_ddr3_cs_n                         (c1_ddr3_cs_n),            // output [1:0]        c1_ddr3_cs_n
-  .c1_ddr3_odt                          (c1_ddr3_odt),             // output [1:0]        c1_ddr3_odt
+  .c1_ddr3_cs_n                         (c1_ddr3_cs_n),            // output [0:0]        c1_ddr3_cs_n
+  .c1_ddr3_odt                          (c1_ddr3_odt),             // output [:0]        c1_ddr3_odt
   // Application interface ports
   .c1_ui_clk                            (c1_ddr3_clk),               // output            c1_ui_clk
   .c1_ui_clk_sync_rst                   (c1_ddr3_rst),      // output            c1_ui_clk_sync_rst
@@ -1092,7 +1118,7 @@ mig_7series_0 u_mig_7series_0 (
   // System Clock Ports
   .c1_sys_clk_p                         (c1_sys_clk_p),           // input                c1_sys_clk_p
   .c1_sys_clk_n                         (c1_sys_clk_n),           // input                c1_sys_clk_n
-  .sys_rst                              (1'b0)                     // input sys_rst
+  .sys_rst                              (sys_rst_n_c & pok_dram)                     // input sys_rst
   );
 
   

@@ -913,26 +913,29 @@ ila_xdma_control ila_xdma_control (
 	.probe16(addra_ori), // input wire [19:0]  probe16 
 	.probe17(addrb_ori), // input wire [19:0]  probe17 
 	.probe18(lat_timer_out), // input wire [7:0]  probe18 
-	.probe19(fifo_rd_en) // input wire [0:0]  probe19	
-//	.probe14(work_group_size), // input wire [31:0]  probe14 
-//	.probe15(stride), // input wire [31:0]  probe15 
-//	.probe16(num_mem_ops), // input wire [63:0]  probe16 
-//	.probe17(mem_burst_size), // input wire [31:0]  probe17 
-//	.probe18(hbm_channel), // input wire [7:0]  probe18 
-//	.probe19(latency_test_enable), // input wire [0:0]  probe19
-//	.probe20(lat_timer_sum_wr), // input wire [31:0]  probe20 
-//	.probe21(lat_timer_sum_rd), // input wire [31:0]  probe21 
+	.probe19(fifo_rd_en), // input wire [0:0]  probe19	
+	.probe20(work_group_size), // input wire [31:0]  probe14 
+	.probe21(stride), // input wire [31:0]  probe15 
+	.probe22(num_mem_ops), // input wire [63:0]  probe16 
+	.probe23(mem_burst_size), // input wire [31:0]  probe17 
+	.probe24(hbm_channel), // input wire [7:0]  probe18 
+	.probe25(latency_test_enable), // input wire [0:0]  probe19
+  .probe26(write_enable), // input wire [1:0]  
+  .probe27(read_enable), // input wire [1:0]  
+  .probe28(start), //1
+	.probe29(lat_timer_sum_wr), // input wire [31:0]  probe20 
+	.probe30(lat_timer_sum_rd), // input wire [31:0]  probe21 
+  .probe31(end_wr), // input wire [1:0]  probe29 
+  .probe32(end_rd), // input wire [1:0]  probe30 
+  .probe33(lat_timer_valid), // input wire [0:0]  probe31 
+  .probe34(lat_timer) // input wire [14:0]  probe32 
 //	.probe22(w_cstate), // input wire [2:0]  probe22 
 //	.probe23(r_cstate), // input wire [2:0]  probe23 
 //	.probe24(wr_addr), // input wire [5:0]  probe24 
 //	.probe25(wr_data), // input wire [31:0]  probe25 
 //	.probe26(rd_addr), // input wire [5:0]  probe26 
-//	.probe27(write_enable), // input wire [31:0]  probe27 
-//	.probe28(read_enable), // input wire [31:0]  probe28 
-//	.probe29(end_wr), // input wire [31:0]  probe29 
-//	.probe30(end_rd), // input wire [31:0]  probe30 
-//	.probe31(lat_timer_valid), // input wire [0:0]  probe31 
-//	.probe32(lat_timer), // input wire [14:0]  probe32 
+	
+
 //	.probe33(addra), // input wire [19:0]  probe33 
 //	.probe34(addrb), // input wire [19:0]  probe34 
 //	.probe35({8'b0,doutb}) // input wire [15:0]  probe35

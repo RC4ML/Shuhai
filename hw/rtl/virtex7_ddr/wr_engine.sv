@@ -265,27 +265,26 @@ begin
     end 
 end
 
-/*
+
 ila_wr_engine inst_bebug_wr_engine (
     .clk (clk),
 
-    .probe0  (started      ),
-    .probe1  (lt_params    ),
-    .probe2  (m_axi_AWREADY),
-    .probe3  (m_axi_AWVALID),
-    .probe4  (m_axi_AWADDR ),
-    .probe5  (m_axi_WVALID ),
-    .probe6  (m_axi_WREADY ),
-    .probe7  (state        ),
-    .probe8  (m_axi_WLAST  ),
-    .probe9  (burst_inc    ),
-    .probe10 (m_axi_AWLEN  ),
-    .probe11 (wr_ops       ),
-    .probe12 (mem_op_index ),
-    .probe13 (num_mem_ops_r),
-    .probe14 (guard_AWVALID),
-    .probe15 (guard_WVALID)
+    .probe0  (started      ), //1
+    .probe1  (guard_WVALID    ), //1
+    .probe2  (m_axi_AWREADY), //1
+    .probe3  (m_axi_AWVALID), //1
+    .probe4  (m_axi_AWADDR ), //33
+    .probe5  (m_axi_WVALID ), //1
+    .probe6  (m_axi_WREADY ), //1
+    .probe7  (state        ), //3
+    .probe8  (m_axi_WLAST  ), //1
+    .probe9  (burst_inc    ), //8
+    .probe10 (m_axi_AWLEN  ) //8
+    // .probe11 (wr_ops       ), //64
+    // .probe12 (mem_op_index ), //64
+    // .probe13 (num_mem_ops_r), //64
+    // .probe14 (guard_AWVALID) //1
 );
-*/
+
 
 endmodule

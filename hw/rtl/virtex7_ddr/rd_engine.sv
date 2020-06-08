@@ -263,28 +263,27 @@ begin
     end 
 end
 
-// ila_rd_engine inst_bebug_rd_engine (
-//    .clk (clk),
+ila_rd_engine inst_bebug_rd_engine (
+   .clk (clk),
 
-//    .probe0  (m_axi_ARVALID   ),
-//    .probe1  (m_axi_ARADDR    ),
-//    .probe2  (m_axi_ARLEN     ),
-//    .probe3  (m_axi_ARSIZE    ),
-//    .probe4  (m_axi_ARREADY   ),
-//    .probe5  (started         ),
-//    .probe6  (m_axi_RVALID    ),
-//    .probe7  (m_axi_RLAST     ),
-//    .probe8  (num_mem_ops_r   ),
-//    .probe9  (stride          ),
-//    .probe10 (isRdLatencyTest ),
-//    .probe11 (mem_op_index    ),
-//    .probe12 (read_resp_lasts ),
-//    .probe13 (guard_ARVALID   ),
-//    .probe14 (lt_params_r     ),
-//    .probe15 (mem_burst_size  ),
-//    .probe16 (state           ),
-//    .probe17 (m_axi_RRESP     )  
-// );
+   .probe0  (m_axi_ARVALID   ), //1
+   .probe1  (m_axi_ARADDR    ), //33
+   .probe2  (m_axi_ARLEN     ), //8
+   .probe3  (m_axi_ARSIZE    ), //3
+   .probe4  (m_axi_ARREADY   ), //1
+   .probe5  (started         ), //1
+   .probe6  (m_axi_RVALID    ), //1
+   .probe7  (m_axi_RLAST     ), //1
+   .probe8  (stride          ), //32
+   .probe9 (isRdLatencyTest ), //1
+   .probe10 (guard_ARVALID   ), //1 
+   .probe11 (mem_burst_size  ), //16
+   .probe12 (state           ), //4
+   .probe13 (m_axi_RRESP     )  //1
+    // .probe8  (num_mem_ops_r   ), //64
+    // .probe11 (mem_op_index    ), //64
+   // .probe12 (read_resp_lasts ), //64
+);
 
 
 endmodule

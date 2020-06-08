@@ -1,27 +1,13 @@
-# CPU_RESET
-#set_property PACKAGE_PIN L30     [get_ports sys_reset]
-#set_property IOSTANDARD LVCMOS18 [get_ports sys_reset]
-#set_false_path -from [get_pins inst_clk_wiz_0/locked] # Reset false path
-#set_property PACKAGE_PIN BJ43 [get_ports ddr0_sys_100M_p]
-#set_property PACKAGE_PIN BJ44 [get_ports ddr0_sys_100M_n]
-#set_property IOSTANDARD  DIFF_SSTL12 [get_ports ddr0_sys_100M_p]
-#set_property IOSTANDARD  DIFF_SSTL12 [get_ports ddr0_sys_100M_n]
-
-
-#set_property PACKAGE_PIN BH6 [get_ports ddr1_sys_100M_p]
-#set_property PACKAGE_PIN BJ6 [get_ports ddr1_sys_100M_n]
-#set_property IOSTANDARD  DIFF_SSTL12 [get_ports ddr1_sys_100M_p]
-#set_property IOSTANDARD  DIFF_SSTL12 [get_ports ddr1_sys_100M_n]
-
-#set_property PACKAGE_PIN G31 [get_ports sys_100M_p]
-#set_property PACKAGE_PIN F31 [get_ports sys_100M_n]
-#set_property IOSTANDARD  DIFF_SSTL12 [get_ports sys_100M_p]
-#set_property IOSTANDARD  DIFF_SSTL12 [get_ports sys_100M_n]
 
 #DDR3###########################################################################
 #clock
-#set_property PACKAGE_PIN [get_ports {clk_ref_p}]
-#set_property PACKAGE_PIN [get_ports {clk_ref_n}]
+create_clock -period 5.000 -name clk_ref_p [get_ports clk_ref_p]
+
+set_property PACKAGE_PIN AD29 [get_ports {clk_ref_p}]
+set_property PACKAGE_PIN AE29 [get_ports {clk_ref_n}]
+
+#create_clock -period 2.500 -name c0_sys_clk [get_ports c0_sys_clk_p]
+#create_clock -period 2.500 -name c1_sys_clk [get_ports c1_sys_clk_p]
 
 set_property PACKAGE_PIN AH15 [get_ports c0_sys_clk_p]
 set_property PACKAGE_PIN AJ15 [get_ports c0_sys_clk_n]
@@ -67,10 +53,6 @@ set_property SLEW FAST [get_ports {c1_ddr3_dm[*]}]
 set_property IOSTANDARD SSTL15 [get_ports {c1_ddr3_dm[*]}]
 
 
-#############################################################################################################
-#create_clock -name ddr0_sys_clock -period 10 [get_ports ddr0_sys_100M_p]
-#create_clock -name ddr1_sys_clock -period 10 [get_ports ddr1_sys_100M_p]
-#create_clock -name sys_clk -period 10 [get_ports sys_clk_p]
 ##############################################################################################################
 set_property PACKAGE_PIN W27 [get_ports sys_rst_n]
 set_property IOSTANDARD LVCMOS18 [get_ports sys_rst_n]
@@ -134,6 +116,7 @@ set_property PACKAGE_PIN M2 [get_ports {pci_exp_txp[7]}]
 #set_property PACKAGE_PIN BH26 [get_ports sys_rst_n]
 #
 set_property CONFIG_VOLTAGE 1.8 [current_design]
+set_property CFGBVS GND   [current_design]
 #
 ##############################################################################################################
 #set_property PACKAGE_PIN AL14 [get_ports sys_clk_n]
@@ -145,35 +128,22 @@ set_property CONFIG_VOLTAGE 1.8 [current_design]
 ##
 #############################################################################################################
 #############################################################################################################
-#
-#
-# BITFILE/BITSTREAM compress options
-#
-#set_property BITSTREAM.CONFIG.EXTMASTERCCLK_EN div-1 [current_design]
-#set_property BITSTREAM.CONFIG.BPI_SYNC_MODE Type1 [current_design]
-#set_property CONFIG_MODE BPI16 [current_design]
-#set_property BITSTREAM.GENERAL.COMPRESS TRUE [current_design]
-#set_property BITSTREAM.CONFIG.UNUSEDPIN Pulldown [current_design]
-#
-#
-#set_false_path -to [get_pins -hier *sync_reg[0]/D]
-#
-#set_property C_USER_SCAN_CHAIN 1 [get_debug_cores dbg_hub]
-#connect_debug_port dbg_hub/clk [get_nets */APB_0_PCLK]
+
+set_property C_USER_SCAN_CHAIN 1 [get_debug_cores dbg_hub]
+#connect_debug_port dbg_hub/clk [get_nets [list user_clk]]
 
 
 # Bitstream Configuration
 # ------------------------------------------------------------------------
-set_property CONFIG_VOLTAGE 1.8 [current_design]
-set_property BITSTREAM.CONFIG.CONFIGFALLBACK Enable [current_design]
-set_property BITSTREAM.GENERAL.COMPRESS TRUE [current_design]
-set_property CONFIG_MODE SPIx4 [current_design]
-set_property BITSTREAM.CONFIG.SPI_BUSWIDTH 4 [current_design]
-set_property BITSTREAM.CONFIG.CONFIGRATE 85.0 [current_design]
-set_property BITSTREAM.CONFIG.EXTMASTERCCLK_EN disable [current_design]
-set_property BITSTREAM.CONFIG.SPI_FALL_EDGE YES [current_design]
-set_property BITSTREAM.CONFIG.UNUSEDPIN Pullup [current_design]
-set_property BITSTREAM.CONFIG.SPI_32BIT_ADDR Yes [current_design]
+set_property BITSTREAM.GENERAL.COMPRESS {TRUE} [ current_design ]
+set_property BITSTREAM.CONFIG.EXTMASTERCCLK_EN {DIV-1} [current_design]
+set_property BITSTREAM.CONFIG.BPI_SYNC_MODE {TYPE1} [current_design]
+set_property BITSTREAM.CONFIG.UNUSEDPIN {Pullnone} [current_design]
+set_property BITSTREAM.CONFIG.BPI_PAGE_SIZE {1} [ current_design ]
+set_property BITSTREAM.CONFIG.CONFIGRATE {3} [ current_design ]
+set_property CONFIG_MODE {BPI16} [current_design]
+set_property CFGBVS GND [ current_design ]
+set_property CONFIG_VOLTAGE 1.8 [ current_design ]
 # ------------------------------------------------------------------------
 
 set_false_path -from [get_clocks -of_objects [get_pins dma_inst/inst/pcie3_ip_i/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKOUT3]] -to [get_clocks -of_objects [get_pins u_mig_7series_0/u_mig_7series_0_mig/c0_u_ddr3_infrastructure/gen_mmcm.mmcm_i/CLKFBOUT]]
