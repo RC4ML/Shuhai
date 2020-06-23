@@ -29,6 +29,7 @@ According to sw/README.md, build the software project and run the application
 
 ## Frequently Asked Questions
 1, Q. the machine failed to detect PCIe on the FPGA when loading the kernel module.
+
    A. Connect the JTAG to another machine that will not crash when downloading the FPGA image. It means that you cannot use the same machine to load the bitstream. 
 
 
