@@ -25,3 +25,26 @@ According to hw/README.md, build vivado project and program the FPGA with the ge
 $ cd sw/
 ```
 According to sw/README.md, build the software project and run the application
+
+
+## Frequently Asked Questions
+1, Q. the machine failed to detect PCIe on the FPGA when loading the kernel module.
+
+   A. Connect the JTAG to another machine that will not crash when downloading the FPGA image. It means that you cannot use the same machine to load the bitstream. 
+
+
+## Cite this work
+If you use it in your paper, please cite our work ([full version](https://ieeexplore.ieee.org/document/9114755)).
+```
+@inproceedings{wang_fccm20,
+  title={Shuhai: Benchmarking High Bandwidth Memory On FPGAs},
+  author={Zeke Wang and Hongjing Huang and Jie Zhang and Gustavo Alonso},
+  year={2020},
+  booktitle={IEEE 28th Annual International Symposium on Field-Programmable Custom Computing Machines (FCCM)},
+}
+
+```
+### Related publications
+* Zeke Wang, Hongjing Huang, Jie Zhang, Gustavo Alonso. [Shuhai: Benchmarking High Bandwidth Memory On FPGAs](https://wangzeke.github.io/doc/shuhai_fccm_20.pdf). FCCM, 2020.
+
+
