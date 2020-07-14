@@ -39,6 +39,10 @@ set_property LOC [get_package_pins -of_objects [get_bels [get_sites -filter {NAM
 set_property LOC [get_package_pins -of_objects [get_bels [get_sites -filter {NAME =~ *COMMON*} -of_objects [get_iobanks -of_objects [get_sites GTYE4_CHANNEL_X1Y7]]]/REFCLK0N]] [get_ports sys_clk_n]
 ##
 #############################################################################################################
+
+set_property PACKAGE_PIN D32 [get_ports d32_port]
+set_property IOSTANDARD  LVCMOS18 [get_ports d32_port]
+
 #############################################################################################################
 #
 #

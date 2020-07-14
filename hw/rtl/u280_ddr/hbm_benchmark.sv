@@ -56,6 +56,8 @@ module hbm_benchmark#(
     input                       ddr1_sys_100M_p,
     input                       ddr1_sys_100M_n,
 
+    output                      d32_port,
+
     output                      c0_ddr4_act_n,
     output [16:0]               c0_ddr4_adr,
     output [1:0]                c0_ddr4_ba,
@@ -88,6 +90,7 @@ module hbm_benchmark#(
     inout  [17:0]               c1_ddr4_dqs_c    
 );
 
+    assign d32_port                = 1'b0;
 ////////////////////////////////////////////////////////////////////////////////
 // Localparams
 ////////////////////////////////////////////////////////////////////////////////
