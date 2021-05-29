@@ -44,7 +44,7 @@ If you use it in your paper, please cite our work ([full version](https://ieeexp
 }
 
 @inproceedings{wang_tc21,
-  title={Shuhai: Benchmarking High Bandwidth Memory On FPGAs},
+  title={Shuhai: A Tool for Benchmarking High Bandwidth Memory On FPGAs},
   author={Hongjing Huang and Zeke Wang and Jie Zhang, Zhenhao He and Chao Wu and Jun Xiao and Gustavo Alonso},
   year={2021},
   booktitle={IEEE Transactions on Computers (TC)}
