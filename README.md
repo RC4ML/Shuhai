@@ -43,8 +43,15 @@ If you use it in your paper, please cite our work ([full version](https://ieeexp
   booktitle={IEEE 28th Annual International Symposium on Field-Programmable Custom Computing Machines (FCCM)},
 }
 
+@inproceedings{wang_tc21,
+  title={Shuhai: Benchmarking High Bandwidth Memory On FPGAs},
+  author={Hongjing Huang and Zeke Wang and Jie Zhang, Zhenhao He and Chao Wu and Jun Xiao and Gustavo Alonso},
+  year={2021},
+  booktitle={IEEE Transactions on Computers (TC)}
+}
+
+
 ```
 ### Related publications
-* Zeke Wang, Hongjing Huang, Jie Zhang, Gustavo Alonso. [Shuhai: Benchmarking High Bandwidth Memory On FPGAs](https://wangzeke.github.io/doc/shuhai_fccm_20.pdf). FCCM, 2020.
 
 
