@@ -83,7 +83,7 @@ If configFile is not specified, the parameters are loaded with default values.
 | writeEnable    | 0-2^32-1               | 0-2^2-1             | 0              | Write enable Signal, each bit represents a channel,the lowest bit represents the channel 0 |
 | latencyChannel | 0-31                   | 0-1                 | closed         | Specify which channel to test latency                                                            |
 | strideLength   | 32,64,128,etc          | 64,128,etc          | 64             | Stride length                                                                    |
-| memBurstSize   | 32,64,128,256,512,1024 | 64,128,256,512,1024 | 64             | Memery burst size                                                                |
+| memBurstSize   | 32,64,128,256,512      | 64,128,256,512,1024 | 64             | Memery burst size                                                                |
 
 
 #### c. Format of "config" file
