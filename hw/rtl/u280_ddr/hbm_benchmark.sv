@@ -428,7 +428,8 @@ AXI #(
     .ADDR_WIDTH    (34 ), 
     .DATA_WIDTH    (512),
     .PARAMS_BITS   (256),
-    .ID_WIDTH      (5  ),
+    .ID_WIDTH      (4  ),
+    .LEN_WIDTH     (8  ),
     .USER_WIDTH    (5  )
     ) hbm_axi[AXI_CHANNELS]();
 
@@ -632,7 +633,8 @@ begin
         .ADDR_WIDTH       (34  ),  // 8G-->33 bits
         .DATA_WIDTH       (512 ),  // 512-bit for DDR4
         .PARAMS_BITS      (256 ),  // parameter bits from PCIe
-        .ID_WIDTH         (5   )   //,
+        .ID_WIDTH         (4   ),   //,
+        .LEN_WIDTH        (8   )
     )inst_lt_engine(
     .clk              (hbm_axi[i].clk),   //should be 450MHz, 
     .rst_n            (hbm_axi[i].arstn), //negative reset,   

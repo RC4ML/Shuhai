@@ -23,7 +23,8 @@ module rd_engine #(
     parameter ADDR_WIDTH      = 33 ,  // 8G-->33 bits
     parameter DATA_WIDTH      = 256,  // 512-bit for DDR4
     parameter PARAMS_BITS     = 256,  // parameter bits from PCIe
-    parameter ID_WIDTH        = 5     //fixme,
+    parameter ID_WIDTH        = 5,     //fixme,
+    parameter LEN_WIDTH       = 8
 )(
     input                     clk,   //should be 450MHz, 
     input                     rst_n, //negative reset,   
@@ -42,7 +43,7 @@ module rd_engine #(
     output                        m_axi_ARVALID , //rd address valid
     output reg [ADDR_WIDTH - 1:0] m_axi_ARADDR  , //rd byte address
     output reg   [ID_WIDTH - 1:0] m_axi_ARID    , //rd address id
-    output reg              [7:0] m_axi_ARLEN   , //rd burst=awlen+1,
+    output reg   [LEN_WIDTH- 1:0] m_axi_ARLEN   , //rd burst=awlen+1,
     output reg              [2:0] m_axi_ARSIZE  , //rd 3'b101, 32B
     output reg              [1:0] m_axi_ARBURST , //rd burst type: 01 (INC), 00 (FIXED)
     output reg              [1:0] m_axi_ARLOCK  , //rd no

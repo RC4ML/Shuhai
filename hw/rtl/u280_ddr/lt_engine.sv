@@ -25,7 +25,8 @@ module lt_engine #(
     parameter ADDR_WIDTH      = 33 ,  //8G-->33 bits
     parameter DATA_WIDTH      = 256, 
     parameter PARAMS_BITS     = 256, 
-    parameter ID_WIDTH        = 5    //fixme,
+    parameter ID_WIDTH        = 5,    //fixme,
+    parameter LEN_WIDTH       = 8
 )(
     input                      clk,   //should be 450MHz, 
     input                      rst_n, //negative reset,   
@@ -50,7 +51,7 @@ module lt_engine #(
     output                     m_axi_AWVALID , //wr address valid
     output  [ADDR_WIDTH - 1:0] m_axi_AWADDR  , //wr byte address
     output  [  ID_WIDTH - 1:0] m_axi_AWID    , //wr address id
-    output               [7:0] m_axi_AWLEN   , //wr burst=awlen+1,
+    output  [ LEN_WIDTH - 1:0] m_axi_AWLEN   , //wr burst=awlen+1,
     output               [2:0] m_axi_AWSIZE  , //wr 3'b101, 32B
     output               [1:0] m_axi_AWBURST , //wr burst type: 01 (INC), 00 (FIXED)
     output               [1:0] m_axi_AWLOCK  , //wr no
@@ -78,7 +79,7 @@ module lt_engine #(
     output                     m_axi_ARVALID , //rd address valid
     output  [ADDR_WIDTH - 1:0] m_axi_ARADDR  , //rd byte address
     output    [ID_WIDTH - 1:0] m_axi_ARID    , //rd address id
-    output               [7:0] m_axi_ARLEN   , //rd burst=awlen+1,
+    output  [ LEN_WIDTH - 1:0] m_axi_ARLEN   , //rd burst=awlen+1,
     output               [2:0] m_axi_ARSIZE  , //rd 3'b101, 32B
     output               [1:0] m_axi_ARBURST , //rd burst type: 01 (INC), 00 (FIXED)
     output               [1:0] m_axi_ARLOCK  , //rd no
@@ -170,7 +171,8 @@ wr_engine #(
     .ADDR_WIDTH       (ADDR_WIDTH ),  // 8G-->33 bits
     .DATA_WIDTH       (DATA_WIDTH ),  // 512-bit for DDR4
     .PARAMS_BITS      (PARAMS_BITS),  // parameter bits from PCIe
-    .ID_WIDTH         (ID_WIDTH   )   //fixme,
+    .ID_WIDTH         (ID_WIDTH   ),   //fixme,
+    .LEN_WIDTH        (LEN_WIDTH   )
 )inst_wr_engine(
     .clk              (clk  ),   //should be 450MHz, 
     .rst_n            (rst_n), //negative reset,   
@@ -215,7 +217,8 @@ rd_engine #(
     .ADDR_WIDTH       (ADDR_WIDTH ),  // 8G-->33 bits
     .DATA_WIDTH       (DATA_WIDTH ),  // 512-bit for DDR4
     .PARAMS_BITS      (PARAMS_BITS),  // parameter bits from PCIe
-    .ID_WIDTH         (ID_WIDTH   )   //fixme,
+    .ID_WIDTH         (ID_WIDTH   ),   //fixme,
+    .LEN_WIDTH        (LEN_WIDTH   )
 )inst_rd_engine(
     .clk              (clk            ), //should be 450MHz, 
     .rst_n            (rst_n          ), //negative reset,

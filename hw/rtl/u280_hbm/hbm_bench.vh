@@ -22,6 +22,7 @@ interface AXI #(
     DATA_WIDTH   = 256,  // 512-bit for DDR4
     PARAMS_BITS  = 256,  // parameter bits from PCIe
     ID_WIDTH     = 5,    //fixme,);
+    LEN_WIDTH    = 8,
     USER_WIDTH   = 5
 )();
 logic                 clk;
@@ -31,7 +32,7 @@ logic[ADDR_WIDTH-1:0] araddr;
 logic[1:0]            arburst;
 logic[3:0]            arcache;
 logic[ID_WIDTH-1:0]   arid;
-logic[7:0]            arlen;
+logic[LEN_WIDTH-1:0]  arlen;
 logic[0:0]            arlock;
 logic[2:0]            arprot;
 logic[3:0]            arqos;
@@ -46,7 +47,7 @@ logic[ADDR_WIDTH-1:0] awaddr;
 logic[1:0]            awburst;
 logic[3:0]            awcache;
 logic[ID_WIDTH-1:0]   awid;
-logic[7:0]            awlen;
+logic[LEN_WIDTH-1:0]  awlen;
 logic[0:0]            awlock;
 logic[2:0]            awprot;
 logic[3:0]            awqos;

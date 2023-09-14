@@ -91,8 +91,8 @@ module xdma_control#(
 
     // reg [N_ULTRARAM_INTF-1:0][19-ULTRARAM_NUM_WIDTH:0]				addra;
     // reg [N_ULTRARAM_INTF-1:0][19-ULTRARAM_NUM_WIDTH:0]				addrb;
-    reg [19:0]                        addra_ori;
-    reg [19:0]                        addrb_ori;
+    reg [11:0]                        addra_ori;
+    reg [11:0]                        addrb_ori;
 
     wire[7:0]				                    doutb;
     reg [7:0]                           doutb_r;
@@ -402,8 +402,8 @@ w16_d512_fwft_fifo lat_time_pri_fifo (
   // end
 
    xpm_memory_tdpram #(
-      .ADDR_WIDTH_A(20),               // DECIMAL
-      .ADDR_WIDTH_B(20),               // DECIMAL
+      .ADDR_WIDTH_A(12),               // DECIMAL
+      .ADDR_WIDTH_B(12),               // DECIMAL
       .AUTO_SLEEP_TIME(0),            // DECIMAL
       .BYTE_WRITE_WIDTH_A(8),        // DECIMAL
       .BYTE_WRITE_WIDTH_B(8),        // DECIMAL
@@ -414,7 +414,7 @@ w16_d512_fwft_fifo lat_time_pri_fifo (
       .MEMORY_INIT_PARAM("0"),        // String
       .MEMORY_OPTIMIZATION("true"),   // String
       .MEMORY_PRIMITIVE("ultra"),      // String
-      .MEMORY_SIZE(8388608),             // DECIMAL
+      .MEMORY_SIZE(32768),             // DECIMAL
       .MESSAGE_CONTROL(0),            // DECIMAL
       .READ_DATA_WIDTH_A(8),         // DECIMAL
       .READ_DATA_WIDTH_B(8),         // DECIMAL
