@@ -454,6 +454,9 @@ AXI #(
     reg                                         lat_timer_valid_o ; //log down lat_timer when lat_timer_valid is 1. 
     reg  [15:0]                                 lat_timer_o       ;
 
+    reg  [3:0]                                       lat_timer_valid_mid ; //log down lat_timer when lat_timer_valid is 1. 
+    reg  [3:0][15:0]                                 lat_timer_mid       ;
+
     //--------------------Parameters-----------------------------//
     reg  [N_MEM_INTF-1:0]                       ld_params_wr;
     reg  [N_MEM_INTF-1:0]                       ld_params_rd;
@@ -509,15 +512,35 @@ AXI #(
   assign lat_timer_sum_wr_o = lat_timer_sum_wr[hbm_channel][31:0];
   assign lat_timer_sum_rd_o = lat_timer_sum_rd[hbm_channel][31:0];
 
-    always @(posedge AXI_ACLK0_st0_buf) begin
+  genvar j;  
+  generate
+    for(j = 0; j < 4; j++) begin
+
+      always @(posedge AXI_ACLK0_st0_buf) begin
         if(~MMCM_LOCK_0)begin
-            lat_timer_o                 <= 16'b0;
-            lat_timer_valid_o           <= 1'b0;
+            lat_timer_mid[j]               <= 16'b0;
+            lat_timer_valid_mid[j]         <= 1'b0;
         end
         else begin
-            lat_timer_o                 <= lat_timer[hbm_channel] ;
-            lat_timer_valid_o           <= lat_timer_valid[hbm_channel];
+            lat_timer_mid[j]                <= lat_timer[{j,hbm_channel[2:0]}] ;
+            lat_timer_valid_mid[j]          <= lat_timer_valid[{j,hbm_channel[2:0]}];
         end
+      end
+
+    end
+  endgenerate
+
+    always @(posedge AXI_ACLK0_st0_buf) begin
+        // if(~MMCM_LOCK_0)begin
+        //     lat_timer_o                 <= 16'b0;
+        //     lat_timer_valid_o           <= 1'b0;
+        //     lat_timer_mid                 <= 16'b0;
+        //     lat_timer_valid_mid           <= 1'b0;            
+        // end
+        // else begin       
+            lat_timer_o                 <= lat_timer_mid[hbm_channel[4:3]] ;
+            lat_timer_valid_o           <= lat_timer_valid_mid[hbm_channel[4:3]];
+        // end
     end
 
 
