@@ -520,30 +520,30 @@ w16_d512_fwft_fifo lat_time_pri_fifo (
 // endgenerate
 
 
-ila_xdma_control ila_xdma_control (
-	.clk(s_aclk), // input wire clk
+//ila_xdma_control ila_xdma_control (
+//	.clk(s_aclk), // input wire clk
 
 
-	.probe0(s_axil_awaddr), // input wire [31:0]  probe0  
-	.probe1(s_axil_awvalid), // input wire [0:0]  probe1 
-	.probe2(s_axil_awready), // input wire [0:0]  probe2 
-	.probe3(s_axil_wdata), // input wire [31:0]  probe3 
-	.probe4(s_axil_wvalid), // input wire [0:0]  probe4 
-	.probe5(s_axil_wready), // input wire [0:0]  probe5 
-	.probe6(s_axil_bvalid), // input wire [0:0]  probe6 
-	.probe7(s_axil_bready), // input wire [0:0]  probe7 
-	.probe8(s_axil_araddr), // input wire [31:0]  probe8 
-	.probe9(s_axil_arvalid), // input wire [0:0]  probe9 
-	.probe10(s_axil_arready), // input wire [0:0]  probe10 
-	.probe11(s_axil_rdata), // input wire [31:0]  probe11 
-	.probe12(s_axil_rvalid), // input wire [0:0]  probe12 
-	.probe13(s_axil_rready), // input wire [0:0]  probe13 
-	.probe14(w_cstate), // input wire [2:0]  probe14 
-	.probe15(r_cstate), // input wire [2:0]  probe15 
-	.probe16(addra_ori), // input wire [19:0]  probe16 
-	.probe17(addrb_ori), // input wire [19:0]  probe17 
-	.probe18(lat_timer_out), // input wire [7:0]  probe18 
-	.probe19(fifo_rd_en) // input wire [0:0]  probe19	
+//	.probe0(s_axil_awaddr), // input wire [31:0]  probe0  
+//	.probe1(s_axil_awvalid), // input wire [0:0]  probe1 
+//	.probe2(s_axil_awready), // input wire [0:0]  probe2 
+//	.probe3(s_axil_wdata), // input wire [31:0]  probe3 
+//	.probe4(s_axil_wvalid), // input wire [0:0]  probe4 
+//	.probe5(s_axil_wready), // input wire [0:0]  probe5 
+//	.probe6(s_axil_bvalid), // input wire [0:0]  probe6 
+//	.probe7(s_axil_bready), // input wire [0:0]  probe7 
+//	.probe8(s_axil_araddr), // input wire [31:0]  probe8 
+//	.probe9(s_axil_arvalid), // input wire [0:0]  probe9 
+//	.probe10(s_axil_arready), // input wire [0:0]  probe10 
+//	.probe11(s_axil_rdata), // input wire [31:0]  probe11 
+//	.probe12(s_axil_rvalid), // input wire [0:0]  probe12 
+//	.probe13(s_axil_rready), // input wire [0:0]  probe13 
+//	.probe14(w_cstate), // input wire [2:0]  probe14 
+//	.probe15(r_cstate), // input wire [2:0]  probe15 
+//	.probe16(addra_ori), // input wire [19:0]  probe16 
+//	.probe17(addrb_ori), // input wire [19:0]  probe17 
+//	.probe18(lat_timer_out), // input wire [7:0]  probe18 
+//	.probe19(fifo_rd_en) // input wire [0:0]  probe19	
 //	.probe14(work_group_size), // input wire [31:0]  probe14 
 //	.probe15(stride), // input wire [31:0]  probe15 
 //	.probe16(num_mem_ops), // input wire [63:0]  probe16 
@@ -566,7 +566,7 @@ ila_xdma_control ila_xdma_control (
 //	.probe33(addra), // input wire [19:0]  probe33 
 //	.probe34(addrb), // input wire [19:0]  probe34 
 //	.probe35({8'b0,doutb}) // input wire [15:0]  probe35
-);
+//);
 
 
 
